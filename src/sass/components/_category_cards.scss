@@ -1,0 +1,16 @@
+.cards__wrapper {
+    margin-top: 25px;
+}
+
+.card {
+    margin-bottom: 30px;
+}
+
+.card:hover {
+    cursor: pointer;
+}
+
+.train-color {
+    background: $color_background;
+    color: $color_white;
+}

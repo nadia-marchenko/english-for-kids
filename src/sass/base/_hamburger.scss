@@ -1,0 +1,45 @@
+
+.header__burger {
+    display: fixed;
+    position: relative;
+    z-index: 3;
+    width: 30px;
+    height: 20px;
+    transition: all 0.3s ease 0s;
+    margin-top: 30px;
+}
+
+.header__burger:hover {
+  cursor: pointer;
+}
+
+.header__burger:before,
+.header__burger:after {
+    content: "";
+    background: $color_additional;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    left: 0;
+}
+
+.header__burger.active {
+  transform: rotate(90deg);
+}
+
+.header__burger:after{
+    bottom: 0;
+  }
+
+  .header__burger:before {
+    top: 0;
+  }
+
+.header__burger span {
+    position: absolute;
+    background: $color_additional;
+    width: 100%;
+    height: 2px;
+    left: 0;
+    top: 9px;
+}

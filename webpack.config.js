@@ -54,8 +54,14 @@ module.exports = (env, options) => {
         plugins: [
             new CleanWebpackPlugin(), 
             new HtmlWebpackPlugin({
-                template: 'index.html'
+              filename: 'index.html',
+              template: 'index.html'
             }),
+            new HtmlWebpackPlugin({
+              filename: 'adjectives.html',
+              template: 'adjectives.html',
+              chunks: [],
+          }),
             new MiniCssExtractPlugin({
                 filename: 'style.css'
             }),
