@@ -57,16 +57,11 @@ module.exports = (env, options) => {
               filename: 'index.html',
               template: 'index.html'
             }),
-            new HtmlWebpackPlugin({
-              filename: 'adjectives.html',
-              template: 'adjectives.html',
-              chunks: [],
-          }),
             new MiniCssExtractPlugin({
                 filename: 'style.css'
             }),
             new FaviconsWebpackPlugin({
-                logo: './assets/favicon.ico',
+                logo: './src/assets/favicon.ico',
                 publicPath: './'
             }),
         ]

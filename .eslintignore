@@ -2,5 +2,5 @@ node_modules
 /.git
 /.vscode
 webpack.config.js
-Header.js
+js
 index.js

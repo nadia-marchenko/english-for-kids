@@ -13,11 +13,12 @@ export class CategoryCardComponent {
         bootstrapCol.className = "col-md-3 col-sm-6";   
         this.categoryParent.append(bootstrapCol);
 
-        card.className = 'card train-color';
+        card.className = 'card category-list-color';
+        card.setAttribute('id', this.categoryName);
         bootstrapCol.append(card);
 
         cardImg.classList = 'card-img-top';
-        cardImg.src = `../assets/categories/${this.categoryName}.jpeg`;
+        cardImg.src = `../src/assets/categories/${this.categoryName}.jpeg`;
         cardImg.setAttribute('alt', this.categoryName);
         card.append(cardImg);
 
