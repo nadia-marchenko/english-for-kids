@@ -25,6 +25,7 @@ export class CardContainerComponent {
         row.className = 'row';
         cardWrapper.append(row);
 
+
         const MainPage = ['actions', 'adjectives', 'animals', 'clothes', 'emotions', 'flowers', 'food', 'kitchen'];
 
         // for (let i = 0; i < MainPage.length; i++) {

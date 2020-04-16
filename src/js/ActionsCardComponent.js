@@ -6,6 +6,9 @@ function importAll (r) {
   }
 importAll(require.context('../assets/categories/actions', true, /\.jpeg$/));
 
+//Import audios
+importAll(require.context('../assets/categories/actions', true, /\.mp3$/));
+
 export class ActionsCardComponent {
     
     constructor (state) {
@@ -39,6 +42,11 @@ export class ActionsCardComponent {
 
         row.className = 'row';
         cardWrapper.append(row);
+
+        //Add audio
+        const audio = document.createElement('audio');
+        audio.className = 'audio';
+        row.append(audio);
 
         const actionsCategory = ['dance', 'eat', 'help', 'jump', 'push', 'read', 'smile', 'swim'];
 
