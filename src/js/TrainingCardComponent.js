@@ -17,7 +17,8 @@ export class TrainingCardComponent {
         card.className = 'card';
         card.setAttribute('id', this.categoryElement);
         bootstrapCol.append(card);
-
+        
+        //Add image
         cardImg.classList = 'card-img-top';
         cardImg.src = `../src/assets/categories/${this.category}/img/${this.categoryElement}.jpeg`;
         cardImg.setAttribute('alt',  this.categoryElement);
@@ -26,6 +27,7 @@ export class TrainingCardComponent {
         cardBody.className = 'card-body';
         card.append(cardBody);
 
+        //Add text
         cardText.className = 'card-text';
         cardText.innerHTML = this.categoryElement[0].toUpperCase() + this.categoryElement.slice(1);
         cardBody.append(cardText);

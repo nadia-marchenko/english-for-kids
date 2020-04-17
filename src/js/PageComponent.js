@@ -1,5 +1,4 @@
 import { HeaderComponent } from "./HeaderComponent";
-import { CardState } from "./CardState"
 import { CardContainerComponent } from "./CardContainerComponent";
 
 export class PageComponent {

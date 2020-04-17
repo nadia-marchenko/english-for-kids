@@ -9,14 +9,19 @@ export class SwitcherComponent {
 
         let input = document.createElement('input');
         input.setAttribute('type', 'checkbox');
-
-        document.getElementById('header__burger').after(switcher);
+        
+        document.querySelector('.header__wrapper').append(switcher);
         switcher.append(input);
     }
-    //Добавить changeState
+
     toggle() {
         this.changeState(new SwitcherState(!this.state.isTrain));
       }
+
+    changeState (newState) {
+        this.state = newState;
+        this.draw();
+    }
         
 }
 

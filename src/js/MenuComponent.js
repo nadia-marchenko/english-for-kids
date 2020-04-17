@@ -1,35 +1,37 @@
 export class MenuComponent {
-    constructor (state) {
+    constructor (state, parentCategory) {
         this.state = state;
+        this.parentCategory = parentCategory;
+    
     }
     draw () {
-        const header = document.createElement('header');
-        const wrapper = document.createElement('div');
         const headerBurger = document.createElement('div');
         const span = document.createElement('span');
         const nav = document.createElement('nav');
         const ul = document.createElement('ul');
-        const switcher = document.createElement('div');
-        const input = document.createElement('input');
-        
 
-        if (document.getElementById('header')) {
-            document.getElementById('header').remove();
+        if (document.getElementById('header__burger')) {
+            document.getElementById('header__burger').remove();
+            document.getElementById('header__navigation').remove();
         }
-        //Убрать дублирование в if
+
+        headerBurger.className = 'header__burger';
+        headerBurger.setAttribute('id', 'header__burger');
+        headerBurger.append(span);
+        this.parentCategory.prepend(headerBurger);
+
+        nav.className = 'header__navigation';
+        nav.setAttribute('id', 'header__navigation');
+        this.parentCategory.append(nav);
+
+        ul.className = 'navigation navbar-nav mr-auto';
+        nav.append(ul);
+        ul.append(this.getListContent());
+        
         if (this.state.isOpened) {
-            header.className = 'header';
-            header.setAttribute('id', 'header');
-            document.body.prepend(header);
-        
-            wrapper.className = 'wrapper header__wrapper';
-            wrapper.setAttribute('id', 'header__wrapper');
-            header.prepend(wrapper);
-        
-            headerBurger.className = 'header__burger active';
-            headerBurger.setAttribute('id', 'header__burger');
-            headerBurger.append(span);
-            wrapper.prepend(headerBurger);
+
+            headerBurger.classList.add('active');
+            nav.classList.add('active');
 
             const burgerMenu = document.getElementById('header__burger');
 
@@ -37,25 +39,7 @@ export class MenuComponent {
                 this.toggle();
             });
         
-            nav.className = 'header__navigation active';
-            nav.setAttribute('id', 'header__navigation');
-            wrapper.append(nav);
-        
-            ul.className = 'navigation navbar-nav mr-auto';
-            nav.append(ul);
-            ul.append(this.getListContent());
         } else {
-            header.className = 'header';
-            document.body.prepend(header);
-            header.setAttribute('id', 'header');
-        
-            wrapper.className = 'wrapper header__wrapper';
-            header.prepend(wrapper);
-        
-            headerBurger.className = 'header__burger';
-            headerBurger.setAttribute('id', 'header__burger');
-            headerBurger.append(span);
-            wrapper.prepend(headerBurger);
             const burgerMenu = document.getElementById('header__burger');
             burgerMenu.addEventListener('click', () => {
                 this.toggle();

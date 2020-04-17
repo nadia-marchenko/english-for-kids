@@ -5,7 +5,18 @@ import { SwitcherState } from './SwitcherComponent';
 
 export class HeaderComponent {
     draw () {
-        let menu = new MenuComponent(new MenuState(false));
+        const header = document.createElement('header');
+        const wrapper = document.createElement('div');
+
+        header.className = 'header';
+        header.setAttribute('id', 'header');
+        document.body.prepend(header);
+
+        wrapper.className = 'wrapper header__wrapper';
+        wrapper.setAttribute('id', 'header__wrapper');
+        header.prepend(wrapper);
+
+        let menu = new MenuComponent(new MenuState(false), wrapper);
         menu.draw();
         let switcher = new SwitcherComponent(new SwitcherState(true));
         switcher.draw();
