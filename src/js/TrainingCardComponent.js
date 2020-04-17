@@ -16,7 +16,6 @@ export class TrainingCardComponent {
 
         card.className = 'card';
         card.setAttribute('id', this.categoryElement);
-        card.setAttribute('onclick', 'playAudio()');
         bootstrapCol.append(card);
 
         cardImg.classList = 'card-img-top';
@@ -32,15 +31,14 @@ export class TrainingCardComponent {
         cardBody.append(cardText);
 
         //Add audio
+        const audio = document.createElement('audio');
+        audio.className = 'audio';
+        this.parentElement.append(audio);
+
         card.onclick = () => {
             const audio = document.querySelector('.audio');
             audio.src = `../src/assets/categories/${this.category}/audio/${this.categoryElement}.mp3`;
             audio.play();
         }
-    }
-
-    playAudio() {
-        const audio = document.querySelector('.audio');
-        audio.play();
     }
 }

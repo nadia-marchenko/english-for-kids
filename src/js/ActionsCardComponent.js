@@ -24,29 +24,13 @@ export class ActionsCardComponent {
         h1.innerHTML = "Actions";
         document.querySelector('.cards__wrapper').before(h1);
         this.addBreadCrumbs('Actions');
-        // new CategoryCardComponent('Actions', "").addBreadCrumbs();
-
-        // const main = document.createElement('main');
-        // const wrapper = document.createElement('div');
         const cardWrapper = document.querySelector('.cards__wrapper');
         const row = document.createElement('div');
-        
-        // const header = document.getElementById('header');
-        // header.after(main);
-
-        // wrapper.className = 'wrapper';
-        // main.append(wrapper);
-
-        // cardWrapper.className = 'cards__wrapper';
-        // wrapper.append(cardWrapper);
 
         row.className = 'row';
         cardWrapper.append(row);
 
-        //Add audio
-        const audio = document.createElement('audio');
-        audio.className = 'audio';
-        row.append(audio);
+ 
 
         const actionsCategory = ['dance', 'eat', 'help', 'jump', 'push', 'read', 'smile', 'swim'];
 

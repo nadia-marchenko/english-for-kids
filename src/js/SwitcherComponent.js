@@ -13,14 +13,14 @@ export class SwitcherComponent {
         document.getElementById('header__burger').after(switcher);
         switcher.append(input);
     }
-
+    //Добавить changeState
     toggle() {
         this.changeState(new SwitcherState(!this.state.isTrain));
       }
         
 }
 
-class SwitcherState {
+export class SwitcherState {
     constructor(isTrain) {
         this.isTrain = isTrain;
     }

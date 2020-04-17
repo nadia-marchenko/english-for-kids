@@ -8,8 +8,7 @@ export class PageComponent {
     }
 
     draw() {
-        new HeaderComponent(true).draw();
+        new HeaderComponent().draw();
         new CardContainerComponent(true).draw();
-        // new MainPageComponent(new CardState(true)).draw();
     }
 }

@@ -4,7 +4,10 @@ import { TrainingCardComponent } from "./TrainingCardComponent";
 function importAll (r) {
     r.keys().forEach(r);
   }
-importAll(require.context('../assets/categories/actions', true, /\.jpeg$/));
+importAll(require.context('../assets/categories/adjectives', true, /\.jpeg$/));
+
+//Import audios
+importAll(require.context('../assets/categories/adjectives', true, /\.mp3$/));
 
 export class AdjectivesCardComponent {
     
@@ -13,7 +16,7 @@ export class AdjectivesCardComponent {
     }
 
     draw () {
-        // Remove any page
+        // Remove main page
         document.querySelector('.row').remove();
 
         const h1 = document.createElement('h1');
@@ -21,31 +24,15 @@ export class AdjectivesCardComponent {
         h1.innerHTML = "Adjectives";
         document.querySelector('.cards__wrapper').before(h1);
         this.addBreadCrumbs('Adjectives');
-        // new CategoryCardComponent('Actions', "").addBreadCrumbs();
-
-        // const main = document.createElement('main');
-        // const wrapper = document.createElement('div');
         const cardWrapper = document.querySelector('.cards__wrapper');
         const row = document.createElement('div');
-        
-        // const header = document.getElementById('header');
-        // header.after(main);
-
-        // wrapper.className = 'wrapper';
-        // main.append(wrapper);
-
-        // cardWrapper.className = 'cards__wrapper';
-        // wrapper.append(cardWrapper);
 
         row.className = 'row';
         cardWrapper.append(row);
 
         const adjCategory = ['anxious', 'bossy', 'cheerful', 'grumpy', 'pleased', 'rapid', 'shy', 'stubborn'];
-
         for (let i = 0; i < adjCategory.length; i++) {
-            // new CategoryCardComponent(actionsCategory[i], row).draw();
-            new TrainingCardComponent("adjectives", adjCategory[i], row).draw();
-            
+            new TrainingCardComponent('adjectives', adjCategory[i], row).draw();
         }
     }
 

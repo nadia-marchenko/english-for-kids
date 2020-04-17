@@ -16,6 +16,7 @@ export class MenuComponent {
         if (document.getElementById('header')) {
             document.getElementById('header').remove();
         }
+        //Убрать дублирование в if
         if (this.state.isOpened) {
             header.className = 'header';
             header.setAttribute('id', 'header');
@@ -84,13 +85,13 @@ export class MenuComponent {
         this.state = newState;
         this.draw();
     }
-    
+
     toggle() {
         this.changeState(new MenuState(!this.state.isOpened));
       }
 }
 
-class MenuState {
+export class MenuState {
     constructor (isOpened) {
         this.isOpened = isOpened;
     }

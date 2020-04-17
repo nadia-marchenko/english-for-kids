@@ -1,6 +1,12 @@
 import { CategoryCardComponent } from "./CategoryCardComponent";
 import { ActionsCardComponent } from "./ActionsCardComponent";
 import { AdjectivesCardComponent } from "./AdjectivesCardComponent";
+import { AnimalsCardComponent } from "./AnimalsCardComponent";
+import { ClothesCardComponent } from "./ClothesCardComponent";
+import { EmotionsCardComponent } from "./EmotionsCardComponent";
+import { FlowersCardComponent } from "./FlowersCardComponent";
+import { FoodCardComponent } from "./FoodCardComponent";
+import { KitchenCardComponent } from "./KitchenCardComponent";
 
 export class CardContainerComponent {
     constructor(category) {
@@ -32,7 +38,13 @@ export class CardContainerComponent {
         //     new CategoryCardComponent(MainPage[i], row).draw();
         // }
 
-        new ActionsCardComponent(true).draw();
+        new KitchenCardComponent(true).draw();
+        // new FoodCardComponent(true).draw();
+        // new FlowersCardComponent(true).draw();
+        // new EmotionsCardComponent(true).draw();
+        // new ClothesCardComponent(true).draw();
+        // new AnimalsCardComponent(true).draw();        
+        // new ActionsCardComponent(true).draw();
         // new AdjectivesCardComponent(true).draw();
 
         // const card = document.getElementById('actions');
