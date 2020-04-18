@@ -4,12 +4,12 @@ import { TrainingCardComponent } from "./TrainingCardComponent";
 function importAll (r) {
     r.keys().forEach(r);
   }
-importAll(require.context('../assets/categories/actions', true, /\.jpeg$/));
+importAll(require.context('../assets/categories/food', true, /\.jpeg$/));
 
 //Import audios
-importAll(require.context('../assets/categories/actions', true, /\.mp3$/));
+importAll(require.context('../assets/categories/food', true, /\.mp3$/));
 
-export class ActionsCardComponent {
+export class FoodCardsComponent {
     
     constructor (state) {
         this.state = state;
@@ -21,9 +21,9 @@ export class ActionsCardComponent {
 
         const h1 = document.createElement('h1');
         h1.className = 'titleCategory';
-        h1.innerHTML = "Actions";
+        h1.innerHTML = "Food";
         document.querySelector('.cards__wrapper').before(h1);
-        this.addBreadCrumbs('Actions');
+        this.addBreadCrumbs('Food');
         const cardWrapper = document.querySelector('.cards__wrapper');
         const row = document.createElement('div');
 
@@ -32,10 +32,10 @@ export class ActionsCardComponent {
 
  
 
-        const actionsCategory = ['dance', 'eat', 'help', 'jump', 'push', 'read', 'smile', 'swim'];
+        const foodCategory = ['cheese', 'croissant', 'egg', 'ham', 'lettuce', 'pancake', 'sandwich', 'soup'];
 
-        for (let i = 0; i < actionsCategory.length; i++) {
-            new TrainingCardComponent('actions', actionsCategory[i], row).draw();
+        for (let i = 0; i < foodCategory.length; i++) {
+            new TrainingCardComponent('food', foodCategory[i], row).draw();
         }
     }
 

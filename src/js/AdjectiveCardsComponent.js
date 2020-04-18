@@ -4,12 +4,12 @@ import { TrainingCardComponent } from "./TrainingCardComponent";
 function importAll (r) {
     r.keys().forEach(r);
   }
-importAll(require.context('../assets/categories/kitchen', true, /\.jpeg$/));
+importAll(require.context('../assets/categories/adjectives', true, /\.jpeg$/));
 
 //Import audios
-importAll(require.context('../assets/categories/kitchen', true, /\.mp3$/));
+importAll(require.context('../assets/categories/adjectives', true, /\.mp3$/));
 
-export class KitchenCardComponent {
+export class AdjectiveCardsComponent {
     
     constructor (state) {
         this.state = state;
@@ -21,21 +21,18 @@ export class KitchenCardComponent {
 
         const h1 = document.createElement('h1');
         h1.className = 'titleCategory';
-        h1.innerHTML = "Kitchen";
+        h1.innerHTML = "Adjectives";
         document.querySelector('.cards__wrapper').before(h1);
-        this.addBreadCrumbs('Kitchen');
+        this.addBreadCrumbs('Adjectives');
         const cardWrapper = document.querySelector('.cards__wrapper');
         const row = document.createElement('div');
 
         row.className = 'row';
         cardWrapper.append(row);
 
- 
-
-        const kitchenCategory = ['bowl', 'grater', 'kettle', 'ladle', 'pan', 'plate', 'spoon', 'whisk'];
-
-        for (let i = 0; i < kitchenCategory.length; i++) {
-            new TrainingCardComponent('kitchen', kitchenCategory[i], row).draw();
+        const adjCategory = ['anxious', 'bossy', 'cheerful', 'grumpy', 'pleased', 'rapid', 'shy', 'stubborn'];
+        for (let i = 0; i < adjCategory.length; i++) {
+            new TrainingCardComponent('adjectives', adjCategory[i], row).draw();
         }
     }
 

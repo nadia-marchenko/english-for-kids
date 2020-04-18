@@ -4,12 +4,12 @@ import { TrainingCardComponent } from "./TrainingCardComponent";
 function importAll (r) {
     r.keys().forEach(r);
   }
-importAll(require.context('../assets/categories/adjectives', true, /\.jpeg$/));
+importAll(require.context('../assets/categories/emotions', true, /\.jpeg$/));
 
 //Import audios
-importAll(require.context('../assets/categories/adjectives', true, /\.mp3$/));
+importAll(require.context('../assets/categories/emotions', true, /\.mp3$/));
 
-export class AdjectivesCardComponent {
+export class EmotionCardsComponent {
     
     constructor (state) {
         this.state = state;
@@ -21,18 +21,21 @@ export class AdjectivesCardComponent {
 
         const h1 = document.createElement('h1');
         h1.className = 'titleCategory';
-        h1.innerHTML = "Adjectives";
+        h1.innerHTML = "Emotions";
         document.querySelector('.cards__wrapper').before(h1);
-        this.addBreadCrumbs('Adjectives');
+        this.addBreadCrumbs('Emotions');
         const cardWrapper = document.querySelector('.cards__wrapper');
         const row = document.createElement('div');
 
         row.className = 'row';
         cardWrapper.append(row);
 
-        const adjCategory = ['anxious', 'bossy', 'cheerful', 'grumpy', 'pleased', 'rapid', 'shy', 'stubborn'];
-        for (let i = 0; i < adjCategory.length; i++) {
-            new TrainingCardComponent('adjectives', adjCategory[i], row).draw();
+ 
+
+        const emotionsCategory = ['angry', 'calm', 'embarrassed', 'excited', 'exhausted', 'lonely', 'nervous', 'scared'];
+
+        for (let i = 0; i < emotionsCategory.length; i++) {
+            new TrainingCardComponent('emotions', emotionsCategory[i], row).draw();
         }
     }
 

@@ -9,7 +9,7 @@ importAll(require.context('../assets/categories/flowers', true, /\.jpeg$/));
 //Import audios
 importAll(require.context('../assets/categories/flowers', true, /\.mp3$/));
 
-export class FlowersCardComponent {
+export class FlowerCardsComponent {
     
     constructor (state) {
         this.state = state;

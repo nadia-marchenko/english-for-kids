@@ -1,16 +1,16 @@
 import { CategoryCardComponent } from "./CategoryCardComponent";
-import { ActionsCardComponent } from "./ActionsCardComponent";
-import { AdjectivesCardComponent } from "./AdjectivesCardComponent";
-import { AnimalsCardComponent } from "./AnimalsCardComponent";
-import { ClothesCardComponent } from "./ClothesCardComponent";
-import { EmotionsCardComponent } from "./EmotionsCardComponent";
-import { FlowersCardComponent } from "./FlowersCardComponent";
-import { FoodCardComponent } from "./FoodCardComponent";
-import { KitchenCardComponent } from "./KitchenCardComponent";
+import { ActionCardsComponent } from "./ActionCardsComponent";
+import { AdjectivesCardsComponent } from "./AdjectiveCardsComponent";
+import { AnimalsCardsComponent } from "./AnimalCardsComponent";
+import { ClothesCardsComponent } from "./ClothCardsComponent";
+import { EmotionsCardsComponent } from "./EmotionCardsComponent";
+import { FlowersCardsComponent } from "./FlowerCardsComponent";
+import { FoodCardsComponent } from "./FoodCardsComponent";
+import { KitchenCardsComponent } from "./KitchenCardsComponent";
 
 export class CardContainerComponent {
-    constructor(category) {
-        this.category = category;
+    constructor(state) {
+        this.state = state;
     }
 
     draw() {
@@ -38,18 +38,55 @@ export class CardContainerComponent {
         //     new CategoryCardComponent(MainPage[i], row).draw();
         // }
 
-        new KitchenCardComponent(true).draw();
-        // new FoodCardComponent(true).draw();
-        // new FlowersCardComponent(true).draw();
-        // new EmotionsCardComponent(true).draw();
-        // new ClothesCardComponent(true).draw();
-        // new AnimalsCardComponent(true).draw();        
-        // new ActionsCardComponent(true).draw();
-        // new AdjectivesCardComponent(true).draw();
+        switch(this.state.currentPage) {
+            case 'Actions':
+                new ActionCardsComponent(true).draw();
+                break;
+            case 'Adjectives':
+                new AdjectiveCardsComponent(true).draw();
+                break;
+            case 'Animals':
+                new AnimalCardsComponent(true).draw(); 
+                break;
+            case 'Clothes':
+                new ClothCardsComponent(true).draw();
+                break;
+            case 'Emotions':
+                new EmotionCardsComponent(true).draw();
+                break;
+            case 'Flowers':
+                new FlowerCardsComponent(true).draw(); 
+                break;
+            case 'Food':
+                new FoodCardsComponent(true).draw();
+                break;
+            case 'Kitchen':
+                new KitchenCardsComponent(true).draw();
+                break;
+            default:
+                for (let i = 0; i < MainPage.length; i++) {
+                    new CategoryCardComponent(MainPage[i], row).draw();
+                }
+        }
+
+        // new KitchenCardsComponent(true).draw();
+        // new FoodCardsComponent(true).draw();
+        // new FlowersCardsComponent(true).draw();
+        // new EmotionsCardsComponent(true).draw();
+        // new ClothesCardsComponent(true).draw();
+        // new AnimalsCardsComponent(true).draw();        
+        // 
+        // new AdjectivesCardsComponent(true).draw();
 
         // const card = document.getElementById('actions');
         // card.addEventListener('click', () => {
         //     new CardContainerComponent(true).draw();
         // });
+    }
+}
+
+export class CardContainerState {
+    constructor (currentPage) {  
+        this.currentPage = currentPage;
     }
 }

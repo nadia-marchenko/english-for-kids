@@ -4,12 +4,12 @@ import { TrainingCardComponent } from "./TrainingCardComponent";
 function importAll (r) {
     r.keys().forEach(r);
   }
-importAll(require.context('../assets/categories/food', true, /\.jpeg$/));
+importAll(require.context('../assets/categories/kitchen', true, /\.jpeg$/));
 
 //Import audios
-importAll(require.context('../assets/categories/food', true, /\.mp3$/));
+importAll(require.context('../assets/categories/kitchen', true, /\.mp3$/));
 
-export class FoodCardComponent {
+export class KitchenCardsComponent {
     
     constructor (state) {
         this.state = state;
@@ -21,9 +21,9 @@ export class FoodCardComponent {
 
         const h1 = document.createElement('h1');
         h1.className = 'titleCategory';
-        h1.innerHTML = "Food";
+        h1.innerHTML = "Kitchen";
         document.querySelector('.cards__wrapper').before(h1);
-        this.addBreadCrumbs('Food');
+        this.addBreadCrumbs('Kitchen');
         const cardWrapper = document.querySelector('.cards__wrapper');
         const row = document.createElement('div');
 
@@ -32,10 +32,10 @@ export class FoodCardComponent {
 
  
 
-        const foodCategory = ['cheese', 'croissant', 'egg', 'ham', 'lettuce', 'pancake', 'sandwich', 'soup'];
+        const kitchenCategory = ['bowl', 'grater', 'kettle', 'ladle', 'pan', 'plate', 'spoon', 'whisk'];
 
-        for (let i = 0; i < foodCategory.length; i++) {
-            new TrainingCardComponent('food', foodCategory[i], row).draw();
+        for (let i = 0; i < kitchenCategory.length; i++) {
+            new TrainingCardComponent('kitchen', kitchenCategory[i], row).draw();
         }
     }
 

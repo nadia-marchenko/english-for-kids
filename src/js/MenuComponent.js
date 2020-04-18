@@ -1,7 +1,7 @@
 export class MenuComponent {
-    constructor (state, parentCategory) {
-        this.state = state;
-        this.parentCategory = parentCategory;
+    constructor (state, parentElement) {
+        this.currentState = state;
+        this.parentElement = parentElement;
     
     }
     draw () {
@@ -18,65 +18,74 @@ export class MenuComponent {
         headerBurger.className = 'header__burger';
         headerBurger.setAttribute('id', 'header__burger');
         headerBurger.append(span);
-        this.parentCategory.prepend(headerBurger);
+        this.parentElement.prepend(headerBurger);
 
         nav.className = 'header__navigation';
         nav.setAttribute('id', 'header__navigation');
-        this.parentCategory.append(nav);
+        this.parentElement.append(nav);
 
         ul.className = 'navigation navbar-nav mr-auto';
         nav.append(ul);
         ul.append(this.getListContent());
-        
-        if (this.state.isOpened) {
+        const burgerMenu = document.getElementById('header__burger');
 
+        burgerMenu.addEventListener('click', () => {
+            this.toggle();
+        });
+        
+        if (this.currentState.isOpened) {
+            
             headerBurger.classList.add('active');
             nav.classList.add('active');
-
-            const burgerMenu = document.getElementById('header__burger');
-
-            burgerMenu.addEventListener('click', () => {
-                this.toggle();
-            });
-        
-        } else {
-            const burgerMenu = document.getElementById('header__burger');
-            burgerMenu.addEventListener('click', () => {
-                this.toggle();
-            });
-        }
+        } 
     }
 
     getListContent() {
         let fragment = new DocumentFragment();
-        const menuItems = ['Main', 'Activities', 'Adjectives', 'Clothes'];
+        const menuItems = ['Main', 'Actions', 'Adjectives', 'Animals', 'Clothes', 'Emotions', 'Flowers', 'Food', 'Kitchen'];
         const menuLinks = ['/', '/activities', '/adjectives', '/cloths'];
       
         for (let i = 0; i < menuItems.length; i += 1) {
           let li = document.createElement('li');
-          let a = document.createElement('a');
+          let p = document.createElement('p');
+        //   let a = document.createElement('a');
           li.className = 'nav-item';
-          a.className = 'nav-link';
-          a.setAttribute('href', menuLinks[i]);
-          li.append(a);
-          li.append(menuItems[i]);
+          
+        //   a.className = 'nav-link';
+        //   a.setAttribute('href', menuLinks[i]);
+            p.className = 'lead';
+            if (this.currentState.currentPage === menuItems[i]) {
+                li.classList.add('active');
+            }
+        //   li.append(a);
+            li.append(p);
+          p.append(menuItems[i]);
+
+          li.onclick = () => {
+            this.changePage(event.target.textContent);
+          }
           fragment.append(li);
         }
         return fragment;
     }
 
     changeState(newState) {
-        this.state = newState;
+        this.currentState = newState;
         this.draw();
     }
 
     toggle() {
-        this.changeState(new MenuState(!this.state.isOpened));
-      }
+        this.changeState(new MenuState(!this.currentState.isOpened, this.currentState.currentPage));
+    }
+
+    changePage(currentPage) {
+        this.changeState(new MenuState(false, currentPage));
+    }
 }
 
 export class MenuState {
-    constructor (isOpened) {
+    constructor (isOpened, currentPage) {
         this.isOpened = isOpened;
+        this.currentPage = currentPage;
     }
 }

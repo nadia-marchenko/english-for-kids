@@ -4,12 +4,12 @@ import { TrainingCardComponent } from "./TrainingCardComponent";
 function importAll (r) {
     r.keys().forEach(r);
   }
-importAll(require.context('../assets/categories/emotions', true, /\.jpeg$/));
+importAll(require.context('../assets/categories/clothes', true, /\.jpeg$/));
 
 //Import audios
-importAll(require.context('../assets/categories/emotions', true, /\.mp3$/));
+importAll(require.context('../assets/categories/clothes', true, /\.mp3$/));
 
-export class EmotionsCardComponent {
+export class ClothCardsComponent {
     
     constructor (state) {
         this.state = state;
@@ -21,9 +21,9 @@ export class EmotionsCardComponent {
 
         const h1 = document.createElement('h1');
         h1.className = 'titleCategory';
-        h1.innerHTML = "Emotions";
+        h1.innerHTML = "Clothes";
         document.querySelector('.cards__wrapper').before(h1);
-        this.addBreadCrumbs('Emotions');
+        this.addBreadCrumbs('Clothes');
         const cardWrapper = document.querySelector('.cards__wrapper');
         const row = document.createElement('div');
 
@@ -32,10 +32,10 @@ export class EmotionsCardComponent {
 
  
 
-        const emotionsCategory = ['angry', 'calm', 'embarrassed', 'excited', 'exhausted', 'lonely', 'nervous', 'scared'];
+        const clothesCategory = ['blouse', 'dress', 'hat', 'scarf', 'skirt', 'suit', 't-shirt', 'tie'];
 
-        for (let i = 0; i < emotionsCategory.length; i++) {
-            new TrainingCardComponent('emotions', emotionsCategory[i], row).draw();
+        for (let i = 0; i < clothesCategory.length; i++) {
+            new TrainingCardComponent('clothes', clothesCategory[i], row).draw();
         }
     }
 
