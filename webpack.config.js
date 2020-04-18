@@ -38,10 +38,18 @@ module.exports = (env, options) => {
                   },
                   {
                     test: /\.(png|ico|svg|jpe?g|gif)$/i,
+                    // use: [
+                    //     {
+                    //     loader: 'file-loader'
+                    //     }
+                    // ],
                     use: [
-                        {
-                        loader: 'file-loader'
+                      {
+                        loader: 'file-loader',
+                        options: {
+                          name: '/images/[name].[ext]',
                         }
+                      },
                     ]
                   },
                   {
@@ -50,7 +58,10 @@ module.exports = (env, options) => {
                   },
                   {
                     test: /\.mp3$/,
-                    loader: 'file-loader'
+                    loader: 'file-loader',
+                    options: {
+                      name: '/audio/[name].[ext]',
+                    }
                 }
             ]
         },
@@ -64,10 +75,10 @@ module.exports = (env, options) => {
             new MiniCssExtractPlugin({
                 filename: 'style.css'
             }),
-            new FaviconsWebpackPlugin({
-                logo: './src/assets/favicon.ico',
-                publicPath: './'
-            }),
+            // new FaviconsWebpackPlugin({
+            //     logo: './src/assets/favicon.ico',
+            //     publicPath: './'
+            // }),
         ]
     }
     return config;

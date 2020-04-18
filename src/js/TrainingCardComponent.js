@@ -20,7 +20,8 @@ export class TrainingCardComponent {
         
         //Add image
         cardImg.classList = 'card-img-top';
-        cardImg.src = `../src/assets/categories/${this.category}/img/${this.categoryElement}.jpeg`;
+        // cardImg.src = `../src/assets/categories/${this.category}/img/${this.categoryElement}.jpeg`;
+        cardImg.src = `images/${this.categoryElement}.jpeg`;
         cardImg.setAttribute('alt',  this.categoryElement);
         card.append(cardImg);
 
@@ -39,7 +40,7 @@ export class TrainingCardComponent {
 
         card.onclick = () => {
             const audio = document.querySelector('.audio');
-            audio.src = `../src/assets/categories/${this.category}/audio/${this.categoryElement}.mp3`;
+            audio.src = `audio/${this.categoryElement}.mp3`;
             audio.play();
         }
     }
