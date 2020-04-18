@@ -1,7 +1,6 @@
 export class TrainingCardComponent {
-    constructor(category, categoryElement, parentElement) {
-        this.category = category;
-        this.categoryElement = categoryElement;
+    constructor(word, parentElement) {
+        this.word = word;
         this.parentElement = parentElement;
     }
     draw() {
@@ -15,14 +14,13 @@ export class TrainingCardComponent {
         this.parentElement.append(bootstrapCol);
 
         card.className = 'card';
-        card.setAttribute('id', this.categoryElement);
+        card.setAttribute('id', this.word);
         bootstrapCol.append(card);
         
         //Add image
         cardImg.classList = 'card-img-top';
-        // cardImg.src = `../src/assets/categories/${this.category}/img/${this.categoryElement}.jpeg`;
-        cardImg.src = `images/${this.categoryElement}.jpeg`;
-        cardImg.setAttribute('alt',  this.categoryElement);
+        cardImg.src = `images/${this.word}.jpeg`;
+        cardImg.setAttribute('alt', this.word);
         card.append(cardImg);
 
         cardBody.className = 'card-body';
@@ -30,17 +28,17 @@ export class TrainingCardComponent {
 
         //Add text
         cardText.className = 'card-text';
-        cardText.innerHTML = this.categoryElement[0].toUpperCase() + this.categoryElement.slice(1);
+        cardText.innerHTML = this.word[0].toUpperCase() + this.word.slice(1);
         cardBody.append(cardText);
 
         //Add audio
         const audio = document.createElement('audio');
         audio.className = 'audio';
-        this.parentElement.append(audio);
+        bootstrapCol.append(audio);
 
         card.onclick = () => {
-            const audio = document.querySelector('.audio');
-            audio.src = `audio/${this.categoryElement}.mp3`;
+            const audio = bootstrapCol.querySelector('.audio');
+            audio.src = `audio/${this.word}.mp3`;
             audio.play();
         }
     }

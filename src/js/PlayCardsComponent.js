@@ -1,18 +1,10 @@
 import { TrainingCardComponent } from "./TrainingCardComponent";
 
-//Import images
-function importAll (r) {
-    r.keys().forEach(r);
-  }
-importAll(require.context('../assets/categories/animals', true, /\.jpeg$/));
-
-//Import audios
-importAll(require.context('../assets/categories/animals', true, /\.mp3$/));
-
-export class AnimalCardsComponent {
+export class PlayCardsComponent {
     
-    constructor (state) {
-        this.state = state;
+    constructor (category, words) {
+        this.category = category;
+        this.words = words;
     }
 
     draw () {
@@ -21,21 +13,17 @@ export class AnimalCardsComponent {
 
         const h1 = document.createElement('h1');
         h1.className = 'titleCategory';
-        h1.innerHTML = "Animals";
+        h1.innerHTML = this.category[0].toUpperCase() + this.category.slice(1);
         document.querySelector('.cards__wrapper').before(h1);
-        this.addBreadCrumbs('Animals');
+        this.addBreadCrumbs(this.category[0].toUpperCase() + this.category.slice(1));
         const cardWrapper = document.querySelector('.cards__wrapper');
         const row = document.createElement('div');
 
         row.className = 'row';
         cardWrapper.append(row);
 
- 
-
-        const actionsCategory = ['deer', 'giraffe', 'hamster', 'ostrich', 'panda', 'shark', 'squirrel', 'turtle'];
-
-        for (let i = 0; i < actionsCategory.length; i++) {
-            new TrainingCardComponent('animals', actionsCategory[i], row).draw();
+        for (let i = 0; i < this.words.length; i++) {
+            new TrainingCardComponent(this.words[i], row).draw();
         }
     }
 

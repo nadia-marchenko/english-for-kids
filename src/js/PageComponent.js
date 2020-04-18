@@ -1,6 +1,5 @@
 import { HeaderComponent, HeaderState } from "./HeaderComponent";
-import { CardContainerComponent } from "./CardContainerComponent";
-import { CardContainerState } from "./CardContainerComponent";
+import { GameComponent, GameState } from "./GameComponent";
 
 export class PageComponent {
     constructor (state) {
@@ -10,7 +9,7 @@ export class PageComponent {
     draw() {
         this.delete();
         new HeaderComponent(new HeaderState(this.state.currentPage)).draw();
-        new CardContainerComponent(new CardContainerState(this.state.currentPage)).draw();
+        new GameComponent(new GameState(this.state.currentPage)).draw();
     }
 
     delete() {
