@@ -8,7 +8,9 @@
     "dev": "webpack --mode development",
     "prod": "webpack --mode production",
     "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix"
+    "lint:fix": "eslint ./src --fix",
+    "start": "node server.js", // serves the application for heroku
+    "heroku-postbuild": "webpack -p" // runs after installation
   },
   "repository": {
     "type": "git",
