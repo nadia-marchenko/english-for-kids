@@ -42,24 +42,21 @@ export class MenuComponent {
 
     getListContent() {
         let fragment = new DocumentFragment();
-        const menuItems = ['Main', 'Actions', 'Adjectives', 'Animals', 'Clothes', 'Emotions', 'Flowers', 'Food', 'Kitchen'];
-        const menuLinks = ['/', '/activities', '/adjectives', '/cloths'];
+        const menuItems = ['main', 'actions', 'adjectives', 'animals', 'clothes', 'emotions', 'flowers', 'food', 'kitchen'];
+        const menuLinks = ['/#/main', '/#/actions', '/#/adjectives', '/#/animals', '/#/clothes', '/#/emotions', '/#/flowers', '/#/food', '/#/kitchen'];
       
         for (let i = 0; i < menuItems.length; i += 1) {
           let li = document.createElement('li');
-          let p = document.createElement('p');
-        //   let a = document.createElement('a');
+          let a = document.createElement('a');
           li.className = 'nav-item';
           
-        //   a.className = 'nav-link';
-        //   a.setAttribute('href', menuLinks[i]);
-            p.className = 'lead';
+          a.className = 'nav-link';
+          a.setAttribute('href', menuLinks[i]);
             if (this.currentState.currentPage === menuItems[i]) {
-                li.classList.add('active');
+                a.classList.add('active');
             }
-        //   li.append(a);
-            li.append(p);
-          p.append(menuItems[i]);
+          li.append(a);
+          a.append(menuItems[i][0].toUpperCase() + menuItems[i].slice(1));
 
           li.onclick = () => {
             this.changePage(event.target.textContent);

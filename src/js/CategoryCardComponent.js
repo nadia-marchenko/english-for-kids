@@ -9,16 +9,20 @@ export class CategoryCardComponent {
         const cardImg = document.createElement('img');
         const cardBody = document.createElement('div');
         const cardText = document.createElement('p');
+        const href = document.createElement('a');
 
         bootstrapCol.className = "col-md-3 col-sm-6";   
+
+        href.setAttribute('href', `/#/${this.categoryName}`);
         this.categoryParent.append(bootstrapCol);
 
         card.className = 'card category-list-color';
         card.setAttribute('id', this.categoryName);
-        bootstrapCol.append(card);
+        bootstrapCol.append(href);
+        href.append(card);
 
         cardImg.classList = 'card-img-top';
-        cardImg.src = `../src/assets/categories/${this.categoryName}.jpeg`;
+        cardImg.src = `images/${this.categoryName}.jpeg`;
         cardImg.setAttribute('alt', this.categoryName);
         card.append(cardImg);
 

@@ -8,8 +8,27 @@ export class PageComponent {
     }
 
     draw() {
+        this.delete();
         new HeaderComponent(new HeaderState(this.state.currentPage)).draw();
         new CardContainerComponent(new CardContainerState(this.state.currentPage)).draw();
+    }
+
+    delete() {
+        if (document.querySelector('header')) {
+            document.querySelector('header').remove();
+        }
+        if(document.querySelector('main')) {
+            document.querySelector('main').remove();
+        }
+    }
+
+    changeCategory(newCategory){
+        this.changeState(new PageState(newCategory));
+    }
+
+    changeState(newState) {
+        this.state = newState;
+        this.draw();
     }
 }
 

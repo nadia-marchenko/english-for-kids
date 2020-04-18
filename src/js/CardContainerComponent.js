@@ -1,12 +1,18 @@
 import { CategoryCardComponent } from "./CategoryCardComponent";
 import { ActionCardsComponent } from "./ActionCardsComponent";
-import { AdjectivesCardsComponent } from "./AdjectiveCardsComponent";
-import { AnimalsCardsComponent } from "./AnimalCardsComponent";
-import { ClothesCardsComponent } from "./ClothCardsComponent";
-import { EmotionsCardsComponent } from "./EmotionCardsComponent";
-import { FlowersCardsComponent } from "./FlowerCardsComponent";
+import { AdjectiveCardsComponent } from "./AdjectiveCardsComponent";
+import { AnimalCardsComponent } from "./AnimalCardsComponent";
+import { ClothCardsComponent } from "./ClothCardsComponent";
+import { EmotionCardsComponent } from "./EmotionCardsComponent";
+import { FlowerCardsComponent } from "./FlowerCardsComponent";
 import { FoodCardsComponent } from "./FoodCardsComponent";
 import { KitchenCardsComponent } from "./KitchenCardsComponent";
+
+//Import images
+function importAll (r) {
+    r.keys().forEach(r);
+  }
+importAll(require.context('../assets/categories', true, /\.jpeg$/));
 
 export class CardContainerComponent {
     constructor(state) {
@@ -39,28 +45,28 @@ export class CardContainerComponent {
         // }
 
         switch(this.state.currentPage) {
-            case 'Actions':
+            case 'actions':
                 new ActionCardsComponent(true).draw();
                 break;
-            case 'Adjectives':
+            case 'adjectives':
                 new AdjectiveCardsComponent(true).draw();
                 break;
-            case 'Animals':
+            case 'animals':
                 new AnimalCardsComponent(true).draw(); 
                 break;
-            case 'Clothes':
+            case 'clothes':
                 new ClothCardsComponent(true).draw();
                 break;
-            case 'Emotions':
+            case 'emotions':
                 new EmotionCardsComponent(true).draw();
                 break;
-            case 'Flowers':
+            case 'flowers':
                 new FlowerCardsComponent(true).draw(); 
                 break;
-            case 'Food':
+            case 'food':
                 new FoodCardsComponent(true).draw();
                 break;
-            case 'Kitchen':
+            case 'kitchen':
                 new KitchenCardsComponent(true).draw();
                 break;
             default:

@@ -52,4 +52,8 @@ export class ActionCardsComponent {
       ol.append(liCurrent);
       document.querySelector('.titleCategory').before(ol);
     }
+
+    delete() {
+        
+    }
 }
