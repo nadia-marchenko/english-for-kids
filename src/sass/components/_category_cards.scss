@@ -8,10 +8,11 @@
     // transform-style: preserve-3d;
 }
 
-// .card:hover {
-//     cursor: pointer;
-//     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-// }
+.card:hover {
+    cursor: pointer;
+    transform: scale(1.009);
+    transition: 1s;
+}
 
 .category-list-color {
     background: $color_background;

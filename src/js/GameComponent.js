@@ -29,6 +29,15 @@ export class GameComponent {
         const foodWords = ['cheese', 'croissant', 'egg', 'ham', 'lettuce', 'pancake', 'sandwich', 'soup'];
         const kitchenWords = ['bowl', 'grater', 'kettle', 'ladle', 'pan', 'plate', 'spoon', 'whisk'];
 
+        const actionsWordsTranslations = ['танцевать', 'кушать', 'помогать', 'прыгать', 'толкать', 'читать', 'улыбаться', 'плавать'];
+        const adjectivesWordsTranslations = ['тревожный', 'занятый', 'веселый', 'сердитый', 'довольный', 'быстрый', 'стеснительный', 'упрямый'];
+        const animalsWordsTranslations = ['олень', 'жираф', 'хомяк', 'страус', 'панда', 'акула', 'белка', 'черепаха'];
+        const clothesWordsTranslations = ['блузка', 'платье', 'шапка', 'шарф', 'юбка', 'костюм', 'футболка', 'галстук'];
+        const emotionsWordsTranslations = ['сердитый', 'спокойный', 'смущенный', 'возбужденный', 'измученный', 'одинокий', 'нервный', 'испуганный'];
+        const flowersWordsTranslations = ['ромашка', 'нарцисы', 'жасмин', 'лотос', 'пион', 'роза', 'подсолнух', 'тюльпан'];
+        const foodWordsTranslations = ['сыр', 'круассан', 'яйцо', 'ветчина', 'салат', 'блин', 'бутерброд', 'суп'];
+        const kitchenWordsTranslations = ['миска', 'терка', 'чайник', 'черпак', 'сковорода', 'тарелка', 'ложка', 'венчик'];
+
         header.after(main);
 
         wrapper.className = 'wrapper';
@@ -42,28 +51,28 @@ export class GameComponent {
 
         switch(this.state.currentPage) {
             case 'actions':
-                new PlayCardsComponent("actions", actionsWords).draw();
+                new PlayCardsComponent("actions", actionsWords, actionsWordsTranslations).draw();
                 break;
             case 'adjectives':
-                new PlayCardsComponent("adjectives", adjectivesWords).draw();
+                new PlayCardsComponent("adjectives", adjectivesWords, adjectivesWordsTranslations).draw();
                 break;
             case 'animals':
-                new PlayCardsComponent("animals", animalsWords).draw(); 
+                new PlayCardsComponent("animals", animalsWords, animalsWordsTranslations).draw(); 
                 break;
             case 'clothes':
-                new PlayCardsComponent("clothes", clothesWords).draw();
+                new PlayCardsComponent("clothes", clothesWords, clothesWordsTranslations).draw();
                 break;
             case 'emotions':
-                new PlayCardsComponent("emotions", emotionsWords).draw();
+                new PlayCardsComponent("emotions", emotionsWords, emotionsWordsTranslations).draw();
                 break;
             case 'flowers':
-                new PlayCardsComponent("flowers", flowersWords).draw(); 
+                new PlayCardsComponent("flowers", flowersWords, flowersWordsTranslations).draw(); 
                 break;
             case 'food':
-                new PlayCardsComponent("food", foodWords).draw();
+                new PlayCardsComponent("food", foodWords, foodWordsTranslations).draw();
                 break;
             case 'kitchen':
-                new PlayCardsComponent("kitchen", kitchenWords).draw();
+                new PlayCardsComponent("kitchen", kitchenWords, kitchenWordsTranslations).draw();
                 break;
             default:
                 for (let i = 0; i < MainPage.length; i++) {

@@ -12,9 +12,13 @@
     padding-bottom: 100%;
 }
   
-.flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-}
+// .flip-card:hover .flip-card-inner {
+//     transform: rotateY(180deg);
+// }
+
+// .flip-card-inner {
+//         transform: rotateY(180deg);
+// }
   
 .flip-card-front, .flip-card-back {
     position: absolute;
@@ -24,6 +28,6 @@
     backface-visibility: hidden;
 }
 
-.flip-card-back {
+.rotate {
     transform: rotateY(180deg);
 }

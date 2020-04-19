@@ -1,6 +1,7 @@
 export class TrainingCardComponent {
-    constructor(word) {
+    constructor(word, translation) {
         this.word = word;
+        this.translation = translation;
     }
     draw() {
         const root = document.createElement('div');
@@ -16,10 +17,10 @@ export class TrainingCardComponent {
                                         <span class="icon"></span>
                                     </div>
                                 </div>
-                                <div class="flip-card-back">
+                                <div class="flip-card-back rotate">
                                     <img class="card-img-top" src="images/${this.word}.jpeg" alt="${this.word}">
                                     <div class="card-body card-game">
-                                        <p class="card-text">It works</p>
+                                        <p class="card-text">${this.translation[0].toUpperCase() + this.translation.slice(1)}</p>
                                     </div>
                                 </div>
                             </div>
@@ -37,12 +38,14 @@ export class TrainingCardComponent {
 
         root.querySelector('.icon').onclick = (ev) => {
             console.log("click");
-            // root.querySelector('.front').classList.add('hidden');
-            root.querySelector('.back').classList.add('flip-card-back');
-            // root.querySelector('.flipper').classList.add('rotate');
+            root.querySelector('.flip-card-inner').classList.add('rotate');
             ev.stopPropagation();
         }
 
+        root.querySelector('.flip-card-back').onmouseleave = () => {
+            console.log('Mouse out!');
+            root.querySelector('.flip-card-inner').classList.remove('rotate');
+        }
         return root;
     }
 }

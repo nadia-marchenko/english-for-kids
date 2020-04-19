@@ -2,9 +2,10 @@ import { TrainingCardComponent } from "./TrainingCardComponent";
 
 export class PlayCardsComponent {
     
-    constructor (category, words) {
+    constructor (category, words, translation) {
         this.category = category;
         this.words = words;
+        this.translation = translation;
     }
 
     draw () {
@@ -23,7 +24,7 @@ export class PlayCardsComponent {
         cardWrapper.append(row);
 
         for (let i = 0; i < this.words.length; i++) {
-            row.append(new TrainingCardComponent(this.words[i]).draw());
+            row.append(new TrainingCardComponent(this.words[i], this.translation[i]).draw());
             
         }
     }
