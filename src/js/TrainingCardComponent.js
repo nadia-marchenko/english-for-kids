@@ -1,45 +1,48 @@
 export class TrainingCardComponent {
-    constructor(word, parentElement) {
+    constructor(word) {
         this.word = word;
-        this.parentElement = parentElement;
     }
     draw() {
-        const bootstrapCol = document.createElement('div');
-        const card = document.createElement('div');
-        const cardImg = document.createElement('img');
-        const cardBody = document.createElement('div');
-        const cardText = document.createElement('p');
+        const root = document.createElement('div');
+        root.classList = 'col-md-3 col-sm-6';
 
-        bootstrapCol.className = "col-md-3 col-sm-6";   
-        this.parentElement.append(bootstrapCol);
-
-        card.className = 'card';
-        card.setAttribute('id', this.word);
-        bootstrapCol.append(card);
+        const card = `<div class="card" id="${this.word}">    
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <img class="card-img-top" src="images/${this.word}.jpeg" alt="${this.word}">
+                                    <div class="card-body card-game">
+                                        <p class="card-text">${this.word[0].toUpperCase() + this.word.slice(1)}</p>
+                                        <span class="icon"></span>
+                                    </div>
+                                </div>
+                                <div class="flip-card-back">
+                                    <img class="card-img-top" src="images/${this.word}.jpeg" alt="${this.word}">
+                                    <div class="card-body card-game">
+                                        <p class="card-text">It works</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <audio class="audio"></audio>
+                    </div>`;
         
-        //Add image
-        cardImg.classList = 'card-img-top';
-        cardImg.src = `images/${this.word}.jpeg`;
-        cardImg.setAttribute('alt', this.word);
-        card.append(cardImg);
+        root.insertAdjacentHTML('afterbegin', card);
 
-        cardBody.className = 'card-body';
-        card.append(cardBody);
-
-        //Add text
-        cardText.className = 'card-text';
-        cardText.innerHTML = this.word[0].toUpperCase() + this.word.slice(1);
-        cardBody.append(cardText);
-
-        //Add audio
-        const audio = document.createElement('audio');
-        audio.className = 'audio';
-        bootstrapCol.append(audio);
-
-        card.onclick = () => {
-            const audio = bootstrapCol.querySelector('.audio');
+        root.querySelector('.card').onclick = () => {
+            const audio = root.querySelector('.audio');
             audio.src = `audio/${this.word}.mp3`;
             audio.play();
         }
+
+        root.querySelector('.icon').onclick = (ev) => {
+            console.log("click");
+            // root.querySelector('.front').classList.add('hidden');
+            root.querySelector('.back').classList.add('flip-card-back');
+            // root.querySelector('.flipper').classList.add('rotate');
+            ev.stopPropagation();
+        }
+
+        return root;
     }
 }

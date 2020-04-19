@@ -23,7 +23,8 @@ export class PlayCardsComponent {
         cardWrapper.append(row);
 
         for (let i = 0; i < this.words.length; i++) {
-            new TrainingCardComponent(this.words[i], row).draw();
+            row.append(new TrainingCardComponent(this.words[i]).draw());
+            
         }
     }
 
