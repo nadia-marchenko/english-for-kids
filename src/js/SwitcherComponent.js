@@ -15,15 +15,13 @@ export class SwitcherComponent {
 
         const newSwitcher = `<label class="switch">
                                 <input class="switch-input" type="checkbox" />
-                                <span class="switch-label" data-on="On" data-off="Off"></span> 
+                                <span class="switch-label" data-on="Train" data-off="Play"></span> 
                                 <span class="switch-handle"></span> 
                             </label>`;
         document.querySelector('.header__wrapper').insertAdjacentHTML('beforeend', newSwitcher);
-        // if (this.state.isTraining) {
-        //     alert('Train!');
-        // } else {
-        //     alert('Play!');
-        // }
+        if (this.state.isTraining) {
+            document.querySelector(".switch").click();
+        } 
     }
 
     toggle() {

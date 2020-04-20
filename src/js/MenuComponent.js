@@ -15,7 +15,7 @@ export class MenuComponent {
                             <span></span>
                         </div>
                         <nav class="header__navigation ${this.currentState.isOpened ? "active" : ""} 
-                        ${this.currentState.isTraining ? "play-mode" : ""}" id="header__navigation">
+                        ${!this.currentState.isTraining ? "play-mode" : ""}" id="header__navigation">
                             <ul class="navigation navbar-nav mr-auto"> 
                                 ${menuItems.map( category =>
                                     `<li class="nav-item">

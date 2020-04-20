@@ -1,22 +1,25 @@
 import { TrainingCardComponent } from "./TrainingCardComponent";
+import { PlayButtonComponent } from "./PlayButtonComponent";
 
 export class PlayCardsComponent {
     
-    constructor (category, words, translation) {
+    constructor (category, words, translation, state) {
         this.category = category;
         this.words = words;
         this.translation = translation;
+        this.state = state;
     }
 
     draw () {
-        // Remove main page
         document.querySelector('.row').remove();
 
         const h1 = document.createElement('h1');
         h1.className = 'titleCategory';
         h1.innerHTML = this.category[0].toUpperCase() + this.category.slice(1);
         document.querySelector('.cards__wrapper').before(h1);
+
         this.addBreadCrumbs(this.category[0].toUpperCase() + this.category.slice(1));
+
         const cardWrapper = document.querySelector('.cards__wrapper');
         const row = document.createElement('div');
 
@@ -27,19 +30,26 @@ export class PlayCardsComponent {
             row.append(new TrainingCardComponent(this.words[i], this.translation[i]).draw());
             
         }
+        if(!this.state.isTraining) {
+            new PlayButtonComponent().draw();
+        }
     }
 
     addBreadCrumbs(categoryName) {
-      let ol = document.createElement('ol');
-      ol.className = 'breadcrumb';
-      let liHome = document.createElement('li');
-      liHome.className = 'breadcrumb-item';
-      liHome.innerHTML = '<a href="#">Home</a>';
-      let liCurrent = document.createElement('li');
-      liCurrent.className = 'breadcrumb-item active';
-      liCurrent.innerHTML = categoryName;
-      ol.append(liHome);
-      ol.append(liCurrent);
-      document.querySelector('.titleCategory').before(ol);
+        const root = `<ol class="breadcrumb ${!this.state.isTraining ? "play-mode" : ""}">
+                        <li class="breadcrumb-item">
+                            <a href="#">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            ${categoryName}
+                        </li>
+                    </ol>`;
+        document.querySelector('.main__wrapper').insertAdjacentHTML("afterbegin", root);
+    }
+}
+
+export class PlayCardsState {
+    constructor(isTraining) {
+        this.isTraining = isTraining;
     }
 }

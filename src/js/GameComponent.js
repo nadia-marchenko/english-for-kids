@@ -1,5 +1,5 @@
-import { CategoryCardComponent } from "./CategoryCardComponent";
-import { PlayCardsComponent } from "./PlayCardsComponent";
+import { CategoryCardComponent, CategoryCardState } from "./CategoryCardComponent";
+import { PlayCardsComponent, PlayCardsState } from "./PlayCardsComponent";
 
 //Import images
 function importAll (r) {
@@ -40,7 +40,7 @@ export class GameComponent {
 
         header.after(main);
 
-        wrapper.className = 'wrapper';
+        wrapper.className = 'wrapper main__wrapper';
         main.append(wrapper);
 
         cardWrapper.className = 'cards__wrapper';
@@ -51,32 +51,32 @@ export class GameComponent {
 
         switch(this.state.currentPage) {
             case 'actions':
-                new PlayCardsComponent("actions", actionsWords, actionsWordsTranslations).draw();
+                new PlayCardsComponent("actions", actionsWords, actionsWordsTranslations, new PlayCardsState(this.state.isTraining)).draw();
                 break;
             case 'adjectives':
-                new PlayCardsComponent("adjectives", adjectivesWords, adjectivesWordsTranslations).draw();
+                new PlayCardsComponent("adjectives", adjectivesWords, adjectivesWordsTranslations, new PlayCardsState(this.state.isTraining)).draw();
                 break;
             case 'animals':
-                new PlayCardsComponent("animals", animalsWords, animalsWordsTranslations).draw(); 
+                new PlayCardsComponent("animals", animalsWords, animalsWordsTranslations, new PlayCardsState(this.state.isTraining)).draw(); 
                 break;
             case 'clothes':
-                new PlayCardsComponent("clothes", clothesWords, clothesWordsTranslations).draw();
+                new PlayCardsComponent("clothes", clothesWords, clothesWordsTranslations, new PlayCardsState(this.state.isTraining)).draw();
                 break;
             case 'emotions':
-                new PlayCardsComponent("emotions", emotionsWords, emotionsWordsTranslations).draw();
+                new PlayCardsComponent("emotions", emotionsWords, emotionsWordsTranslations, new PlayCardsState(this.state.isTraining)).draw();
                 break;
             case 'flowers':
-                new PlayCardsComponent("flowers", flowersWords, flowersWordsTranslations).draw(); 
+                new PlayCardsComponent("flowers", flowersWords, flowersWordsTranslations, new PlayCardsState(this.state.isTraining)).draw(); 
                 break;
             case 'food':
-                new PlayCardsComponent("food", foodWords, foodWordsTranslations).draw();
+                new PlayCardsComponent("food", foodWords, foodWordsTranslations, new PlayCardsState(this.state.isTraining)).draw();
                 break;
             case 'kitchen':
-                new PlayCardsComponent("kitchen", kitchenWords, kitchenWordsTranslations).draw();
+                new PlayCardsComponent("kitchen", kitchenWords, kitchenWordsTranslations, new PlayCardsState(this.state.isTraining)).draw();
                 break;
             default:
                 for (let i = 0; i < MainPage.length; i++) {
-                    new CategoryCardComponent(MainPage[i], row).draw();
+                    row.insertAdjacentHTML("beforeend", new CategoryCardComponent(MainPage[i], new CategoryCardState(this.state.isTraining)).draw());
                 }
         }
         // if (this.state.isTraining) {
