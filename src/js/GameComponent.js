@@ -79,12 +79,18 @@ export class GameComponent {
                     new CategoryCardComponent(MainPage[i], row).draw();
                 }
         }
+        // if (this.state.isTraining) {
+        //     alert('Train!');
+        // } else {
+        //     alert('Play!');
+        // }
 
     }
 }
 
 export class GameState {
-    constructor (currentPage) {  
+    constructor (currentPage, isTraining) {  
         this.currentPage = currentPage;
+        this.isTraining = isTraining;
     }
 }

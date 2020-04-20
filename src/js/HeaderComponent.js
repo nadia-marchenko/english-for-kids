@@ -19,15 +19,17 @@ export class HeaderComponent {
         wrapper.setAttribute('id', 'header__wrapper');
         header.prepend(wrapper);
 
-        let menu = new MenuComponent(new MenuState(false, this.state.currentPage), wrapper);
-        menu.draw();
-        let switcher = new SwitcherComponent(new SwitcherState(true));
+        let menu = new MenuComponent(new MenuState(false, this.state.currentPage, this.state.isTraining));
+        wrapper.append(menu.draw());
+        
+        let switcher = new SwitcherComponent(new SwitcherState(this.state.isTraining));
         switcher.draw();
     }
 }
 
 export class HeaderState {
-    constructor(currentPage) {
+    constructor(currentPage, isTraining) {
         this.currentPage = currentPage;
+        this.isTraining = isTraining;
     }
 }

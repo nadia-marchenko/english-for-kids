@@ -20,6 +20,10 @@
     box-shadow: rgba(45, 48, 58, 0.6) 0px 0px 0px 100vw;
 }
 
+.header__navigation.play-mode {
+    background: $color_play;
+}
+
 .navigation {
     padding: 80px 0 0 25px;
 }

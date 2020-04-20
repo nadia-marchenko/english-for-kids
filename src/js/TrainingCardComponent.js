@@ -7,7 +7,7 @@ export class TrainingCardComponent {
         const root = document.createElement('div');
         root.classList = 'col-md-3 col-sm-6';
 
-        const card = `<div class="card" id="${this.word}">    
+        const trainingCard = `<div class="card" id="${this.word}">    
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front">
@@ -27,9 +27,15 @@ export class TrainingCardComponent {
                         </div>
                         <audio class="audio"></audio>
                     </div>`;
-        
-        root.insertAdjacentHTML('afterbegin', card);
 
+        const playingCard = `<div class="card" id="${this.word}">    
+                                <img class="card-img-top" src="images/${this.word}.jpeg" alt="${this.word}">
+                            </div>
+                    <audio class="audio"></audio>
+                </div>`;
+        
+        root.insertAdjacentHTML('afterbegin', trainingCard);
+        
         root.querySelector('.card').onclick = () => {
             const audio = root.querySelector('.audio');
             audio.src = `audio/${this.word}.mp3`;

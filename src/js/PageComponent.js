@@ -8,8 +8,8 @@ export class PageComponent {
 
     draw() {
         this.delete();
-        new HeaderComponent(new HeaderState(this.state.currentPage)).draw();
-        new GameComponent(new GameState(this.state.currentPage)).draw();
+        new HeaderComponent(new HeaderState(this.state.currentPage, this.state.isTraining)).draw();
+        new GameComponent(new GameState(this.state.currentPage, this.state.isTraining)).draw();
     }
 
     delete() {
@@ -22,7 +22,7 @@ export class PageComponent {
     }
 
     changeCategory(newCategory){
-        this.changeState(new PageState(newCategory));
+        this.changeState(new PageState(newCategory,this.state.isTraining));
     }
 
     changeState(newState) {
@@ -32,7 +32,8 @@ export class PageComponent {
 }
 
 export class PageState {
-    constructor(currentPage) {
+    constructor(currentPage, isTraining) {
         this.currentPage = currentPage;
+        this.isTraining = isTraining;
     }
 }

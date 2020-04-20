@@ -1,69 +1,40 @@
 export class MenuComponent {
-    constructor (state, parentElement) {
+    constructor (state) {
         this.currentState = state;
-        this.parentElement = parentElement;
-    
+        this.root = document.createElement('div');
     }
     draw () {
-        const headerBurger = document.createElement('div');
-        const span = document.createElement('span');
-        const nav = document.createElement('nav');
-        const ul = document.createElement('ul');
-
-        if (document.getElementById('header__burger')) {
-            document.getElementById('header__burger').remove();
-            document.getElementById('header__navigation').remove();
+        if (this.root.querySelector('.header__burger')) {
+            this.root.querySelector('.header__burger').remove();
+            this.root.querySelector('.header__navigation').remove();
         }
 
-        headerBurger.className = 'header__burger';
-        headerBurger.setAttribute('id', 'header__burger');
-        headerBurger.append(span);
-        this.parentElement.prepend(headerBurger);
-
-        nav.className = 'header__navigation';
-        nav.setAttribute('id', 'header__navigation');
-        this.parentElement.append(nav);
-
-        ul.className = 'navigation navbar-nav mr-auto';
-        nav.append(ul);
-        ul.append(this.getListContent());
-        const burgerMenu = document.getElementById('header__burger');
-
-        burgerMenu.addEventListener('click', () => {
-            this.toggle();
-        });
-        
-        if (this.currentState.isOpened) {
-            
-            headerBurger.classList.add('active');
-            nav.classList.add('active');
-        } 
-    }
-
-    getListContent() {
-        let fragment = new DocumentFragment();
         const menuItems = ['main', 'actions', 'adjectives', 'animals', 'clothes', 'emotions', 'flowers', 'food', 'kitchen'];
-        const menuLinks = ['/#/main', '/#/actions', '/#/adjectives', '/#/animals', '/#/clothes', '/#/emotions', '/#/flowers', '/#/food', '/#/kitchen'];
-      
-        for (let i = 0; i < menuItems.length; i += 1) {
-          let li = document.createElement('li');
-          let a = document.createElement('a');
-          li.className = 'nav-item';
-          
-          a.className = 'nav-link';
-          a.setAttribute('href', menuLinks[i]);
-            if (this.currentState.currentPage === menuItems[i]) {
-                a.classList.add('active');
-            }
-          li.append(a);
-          a.append(menuItems[i][0].toUpperCase() + menuItems[i].slice(1));
 
-          li.onclick = () => {
-            this.changePage(event.target.textContent);
-          }
-          fragment.append(li);
-        }
-        return fragment;
+        const couple = `<div class="header__burger ${this.currentState.isOpened ? "active" : ""}" id="header__burger">
+                            <span></span>
+                        </div>
+                        <nav class="header__navigation ${this.currentState.isOpened ? "active" : ""} 
+                        ${this.currentState.isTraining ? "play-mode" : ""}" id="header__navigation">
+                            <ul class="navigation navbar-nav mr-auto"> 
+                                ${menuItems.map( category =>
+                                    `<li class="nav-item">
+                                        <a class="nav-link ${(this.currentState.currentPage === category) ? "active" : ""}" 
+                                        href="/#/${category}">
+                                            ${category[0].toUpperCase() + category.slice(1)}
+                                        </a>
+                                    </li>`
+                                ).reduce( (a, b) => a + b) }
+                            </ul>
+                        </nav>`;
+
+        this.root.insertAdjacentHTML('afterbegin', couple);
+
+        this.root.querySelector('.header__burger').onclick = () => {
+            this.toggle();
+        };
+
+        return this.root;
     }
 
     changeState(newState) {
@@ -72,17 +43,14 @@ export class MenuComponent {
     }
 
     toggle() {
-        this.changeState(new MenuState(!this.currentState.isOpened, this.currentState.currentPage));
-    }
-
-    changePage(currentPage) {
-        this.changeState(new MenuState(false, currentPage));
+        this.changeState(new MenuState(!this.currentState.isOpened, this.currentState.currentPage, this.currentState.isTraining));
     }
 }
 
 export class MenuState {
-    constructor (isOpened, currentPage) {
+    constructor (isOpened, currentPage, isTraining) {
         this.isOpened = isOpened;
         this.currentPage = currentPage;
+        this.isTraining = isTraining;
     }
 }

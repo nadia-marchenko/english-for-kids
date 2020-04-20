@@ -1,87 +1,192 @@
-input[type="checkbox"] {
-    position: relative;
-    display: inline-block;
-    -webkit-appearance: none;
-    -webkit-tap-highlight-color: transparent;
-    height: 2em;
-    width: 7em;
-    font-size: 2em;
-    border-radius: 3.4em;
-    background-color: #6CC3D5;
-    border-color: transparent;
-    background-clip: padding-box;
-    color: #E2E5E5;
-    vertical-align: middle;
+// input[type="checkbox"] {
+//     position: relative;
+//     display: inline-block;
+//     -webkit-appearance: none;
+//     -webkit-tap-highlight-color: transparent;
+//     height: 2em;
+//     width: 7em;
+//     font-size: 2em;
+//     border-radius: 3.4em;
+//     background-color: #6CC3D5;
+//     border-color: transparent;
+//     background-clip: padding-box;
+//     color: #E2E5E5;
+//     vertical-align: middle;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 50%;
-    background-color: #ffffff;
-    border-radius: 79%;
-    border: 0.125em solid transparent;
-    background-clip: padding-box;
-    transform-origin: right center;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    animation: switch-off-transform 0.25s ease-out forwards;
-    z-index: 2;
-  }
+//   &::before {
+//     content: "";
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     bottom: 0;
+//     right: 50%;
+//     background-color: #ffffff;
+//     border-radius: 79%;
+//     border: 0.125em solid transparent;
+//     background-clip: padding-box;
+//     transform-origin: right center;
+//     transform: translateZ(0);
+//     backface-visibility: hidden;
+//     animation: switch-off-transform 0.25s ease-out forwards;
+//     z-index: 2;
+//   }
 
-  &::after {
-    position: absolute;
-    left: 2.1em;
-    top: 0.4em;
-    line-height: 2;
-    font-size: 23px;
-    font-weight: bold;
-    font-family: "Helvetica Neue";
-    text-transform: uppercase;
-    content: "play train";
-    letter-spacing: 0;
-    word-spacing: 5px;
-    z-index: 1;
-  }
+//   &::after {
+//     position: absolute;
+//     left: 2.1em;
+//     top: 0.4em;
+//     line-height: 2;
+//     font-size: 23px;
+//     font-weight: bold;
+//     font-family: "Helvetica Neue";
+//     text-transform: uppercase;
+//     content: "play train";
+//     letter-spacing: 0;
+//     word-spacing: 5px;
+//     z-index: 1;
+//   }
 
-  &:focus {
-    color: $color_white;
-    border-color: transparent;
-    background-color: $color_switcher_play;
-    outline: none;
-  }
+//   &:focus {
+//     color: $color_white;
+//     border-color: transparent;
+//     background-color: $color_switcher_play;
+//     outline: none;
+//   }
 
 
-  &:checked {
-    color: $color_white;
-    background-color: $color_background;
-    border-color: transparent;
-    &::before{
-      transform-origin: left center;
-      animation: switch-on-transform 0.25s ease-out forwards;
-    }
-  }
-}
+//   &:checked {
+//     color: $color_white;
+//     background-color: $color_background;
+//     border-color: transparent;
+//     &::before{
+//       transform-origin: left center;
+//       animation: switch-on-transform 0.25s ease-out forwards;
+//     }
+//   }
+// }
   
+// .switch {
+//   display: inline-block;
+//   transform: scale(0.5);
+//   margin: 1.5em 0;
+// }
+  
+  
+// @keyframes switch-on-transform {
+//   0% {
+//     transform: translateX(0) scaleX(1) translateZ(0);
+//   }
+//   25% {
+//     transform: translateX(0) scaleX(1.33) translateZ(0);
+//   }
+//   100% {
+//     transform: translateX(100%) scaleX(1) translateZ(0);
+//   }
+// }
+
 .switch {
-  display: inline-block;
-  transform: scale(0.5);
-  margin: 1.5em 0;
+	position: relative;
+	display: block;
+	vertical-align: top;
+	width: 100px;
+	height: 30px;
+	padding: 3px;
+	margin: 40px 0 30px 0;
+	background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
+	background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
+	border-radius: 18px;
+	box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+	box-sizing:content-box;
 }
-  
-  
-@keyframes switch-on-transform {
-  0% {
-    transform: translateX(0) scaleX(1) translateZ(0);
-  }
-  25% {
-    transform: translateX(0) scaleX(1.33) translateZ(0);
-  }
-  100% {
-    transform: translateX(100%) scaleX(1) translateZ(0);
-  }
+.switch-input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	box-sizing:content-box;
+}
+.switch-label {
+	position: relative;
+	display: block;
+	height: inherit;
+	font-size: 10px;
+	text-transform: uppercase;
+	background: #eceeef;
+	border-radius: inherit;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);
+	box-sizing:content-box;
+}
+.switch-label:before, .switch-label:after {
+	position: absolute;
+	top: 50%;
+	margin-top: -.5em;
+	line-height: 1;
+	-webkit-transition: inherit;
+	-moz-transition: inherit;
+	-o-transition: inherit;
+	transition: inherit;
+	box-sizing:content-box;
+}
+.switch-label:before {
+	content: attr(data-off);
+	right: 11px;
+	color: #aaaaaa;
+	text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+}
+.switch-label:after {
+	content: attr(data-on);
+	left: 11px;
+	color: #FFFFFF;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+	opacity: 0;
+}
+.switch-input:checked ~ .switch-label {
+	background: #E1B42B;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
+}
+.switch-input:checked ~ .switch-label:before {
+	opacity: 0;
+}
+.switch-input:checked ~ .switch-label:after {
+	opacity: 1;
+}
+.switch-handle {
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	width: 28px;
+	height: 28px;
+	background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
+	background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);
+	border-radius: 100%;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+.switch-handle:before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -6px 0 0 -6px;
+	width: 12px;
+	height: 12px;
+	background: linear-gradient(to bottom, #eeeeee, #FFFFFF);
+	background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);
+	border-radius: 6px;
+	box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
+}
+.switch-input:checked ~ .switch-handle {
+	left: 74px;
+	box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+ 
+/* Transition
+========================== */
+.switch-label, .switch-handle {
+	transition: All 0.3s ease;
+	-webkit-transition: All 0.3s ease;
+	-moz-transition: All 0.3s ease;
+	-o-transition: All 0.3s ease;
 }
   
 @keyframes switch-off-transform {

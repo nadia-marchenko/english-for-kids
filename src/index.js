@@ -9,7 +9,7 @@ function getCategoryFromURL() {
 }
 
 const currentCategory = getCategoryFromURL();
-const page = new PageComponent(new PageState(currentCategory));
+const page = new PageComponent(new PageState(currentCategory, false));
 
 page.draw();
 
