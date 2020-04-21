@@ -1,5 +1,15 @@
 import { HeaderComponent, HeaderState } from "./HeaderComponent";
-import { GameComponent, GameState } from "./GameComponent";
+import { MenuCardsComponent } from "./MenuCardsComponent";
+import { CategoryProvider } from "./CategoryProvider";
+import { CategoryCardState } from "./CategoryCardComponent";
+import { PlayCardsComponent, PlayCardsState } from "./PlayCardsComponent";
+
+//Import images
+function importAll (r) {
+    r.keys().forEach(r);
+  }
+importAll(require.context('../assets/categories', true, /\.jpeg$/));
+importAll(require.context('../assets/categories', true, /\.mp3$/));
 
 export class PageComponent {
     constructor (state) {
@@ -9,7 +19,19 @@ export class PageComponent {
     draw() {
         this.delete();
         new HeaderComponent(new HeaderState(this.state.currentPage, this.state.isTraining)).draw();
-        new GameComponent(new GameState(this.state.currentPage, this.state.isTraining)).draw();
+
+        if(this.state.currentPage === 'main') {
+            new MenuCardsComponent(
+                new CategoryProvider().getCategories(),
+                new CategoryCardState(this.state.isTraining)
+                ).draw();
+        } else {
+            new PlayCardsComponent(
+                this.state.currentPage, 
+                new CategoryProvider().getCategoriesWordsAndTranslations(this.state.currentPage),
+                new PlayCardsState(this.state.isTraining)
+            ).draw();
+        } 
     }
 
     delete() {

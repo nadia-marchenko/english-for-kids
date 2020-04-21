@@ -4,6 +4,7 @@ export class CategoryCardComponent {
         this.state = state;
     }
     draw () {
+        
         return `<div class="col-md-3 col-sm-6">
                         <a href="/#/${this.categoryName}">
                             <div class="card category-list-color ${!this.state.isTraining ? "play-mode" : ""}" id="${this.categoryName}">

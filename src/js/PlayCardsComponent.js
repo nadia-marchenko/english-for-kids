@@ -3,48 +3,41 @@ import { PlayButtonComponent } from "./PlayButtonComponent";
 
 export class PlayCardsComponent {
     
-    constructor (category, words, translation, state) {
+    constructor (category, wordsAndTranslations, state) {
         this.category = category;
-        this.words = words;
-        this.translation = translation;
+        this.wordsAndTranslations = wordsAndTranslations;
         this.state = state;
     }
 
     draw () {
-        document.querySelector('.row').remove();
+        const root = `<main>
+                        <div class="wrapper main__wrapper">
 
-        const h1 = document.createElement('h1');
-        h1.className = 'titleCategory';
-        h1.innerHTML = this.category[0].toUpperCase() + this.category.slice(1);
-        document.querySelector('.cards__wrapper').before(h1);
+                            <ol class="breadcrumb play-mode">
+                                <li class="breadcrumb-item">
+                                    <a href="#">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    ${this.category[0].toUpperCase() + this.category.slice(1)}
+                                </li>
+                            </ol>
+                            <h1 class="titleCategory">${this.category[0].toUpperCase() + this.category.slice(1)}</h1>
+                            <div class="cards__wrapper">
+                                <div class="row">
+                                </div>
+                            </div>
+                        </div>
+                    </main>`;
+        
+        document.body.insertAdjacentHTML("beforeend", root);
 
-        this.addBreadCrumbs(this.category[0].toUpperCase() + this.category.slice(1));
-
-        const cardWrapper = document.querySelector('.cards__wrapper');
-        const row = document.createElement('div');
-
-        row.className = 'row';
-        cardWrapper.append(row);
-
-        for (let i = 0; i < this.words.length; i++) {
-            row.append(new TrainingCardComponent(this.words[i], this.translation[i]).draw());
+        for (let i = 0; i < this.wordsAndTranslations.length; i++) {
+            document.querySelector('.row').append(new TrainingCardComponent(this.wordsAndTranslations[i].word, this.wordsAndTranslations[i].translation).draw());
             
         }
         if(!this.state.isTraining) {
             new PlayButtonComponent().draw();
         }
-    }
-
-    addBreadCrumbs(categoryName) {
-        const root = `<ol class="breadcrumb ${!this.state.isTraining ? "play-mode" : ""}">
-                        <li class="breadcrumb-item">
-                            <a href="#">Home</a>
-                        </li>
-                        <li class="breadcrumb-item active">
-                            ${categoryName}
-                        </li>
-                    </ol>`;
-        document.querySelector('.main__wrapper').insertAdjacentHTML("afterbegin", root);
     }
 }
 
