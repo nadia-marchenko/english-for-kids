@@ -1,9 +1,10 @@
 export class PlayButtonComponent {
     constructor() {
-
+        this.root = document.createElement('div');
     }
     draw() {
-        const root = `<button type="button" class="btn btn-primary btn-lg btn-block btn-danger">Play</button>`;
-        document.querySelector('.main__wrapper').insertAdjacentHTML('beforeend', root);
+        let button = `<button type="button" class="btn btn-primary btn-lg btn-block btn-danger">Play</button>`;
+        this.root.insertAdjacentHTML('beforeend', button);
+        return this.root;
     }
 }

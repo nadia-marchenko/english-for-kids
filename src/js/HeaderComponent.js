@@ -4,26 +4,23 @@ import { SwitcherComponent } from './SwitcherComponent';
 import { SwitcherState } from './SwitcherComponent';
 
 export class HeaderComponent {
-    constructor(state) {
+    constructor(state, toggleTrainingMode) {
         this.state = state;
+        this.toggleTrainingMode = toggleTrainingMode;
+        this.root = document.createElement('header');
     }
     draw () {
-        const header = document.createElement('header');
-        const wrapper = document.createElement('div');
-
-        header.className = 'header';
-        header.setAttribute('id', 'header');
-        document.body.prepend(header);
-
-        wrapper.className = 'wrapper header__wrapper';
-        wrapper.setAttribute('id', 'header__wrapper');
-        header.prepend(wrapper);
+        const wrapper = `<div class="wrapper header__wrapper" id="header__wrapper">
+                        </div>`;
+        this.root.insertAdjacentHTML("beforeend", wrapper);
 
         let menu = new MenuComponent(new MenuState(false, this.state.currentPage, this.state.isTraining));
-        wrapper.append(menu.draw());
+        this.root.querySelector(".header__wrapper").append(menu.draw());
         
-        let switcher = new SwitcherComponent(new SwitcherState(this.state.isTraining));
-        switcher.draw();
+        let switcher = new SwitcherComponent(new SwitcherState(this.state.isTraining), this.toggleTrainingMode);
+        this.root.querySelector(".header__wrapper").append(switcher.draw());
+
+        return this.root;
     }
 }
 

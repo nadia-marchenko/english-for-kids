@@ -1,4 +1,4 @@
-export class CategoryCardComponent {
+export class MenuCardComponent {
     constructor (categoryName, state) {
         this.categoryName = categoryName;
         this.state = state;
@@ -18,7 +18,7 @@ export class CategoryCardComponent {
     }
 }
 
-export class CategoryCardState {
+export class MenuCardState {
     constructor(isTraining) {
         this.isTraining = isTraining;
     }

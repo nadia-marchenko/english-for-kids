@@ -1,8 +1,7 @@
 import { HeaderComponent, HeaderState } from "./HeaderComponent";
-import { MenuCardsComponent } from "./MenuCardsComponent";
+import { MenuCardsComponent, MenuCardsState } from "./MenuCardsComponent";
 import { CategoryProvider } from "./CategoryProvider";
-import { CategoryCardState } from "./CategoryCardComponent";
-import { PlayCardsComponent, PlayCardsState } from "./PlayCardsComponent";
+import { TrainingCardsComponent, TrainingCardsState } from "./TrainingCardsComponent";
 
 //Import images
 function importAll (r) {
@@ -14,23 +13,27 @@ importAll(require.context('../assets/categories', true, /\.mp3$/));
 export class PageComponent {
     constructor (state) {
         this.state = state;
+        this.root = document.body;
     }
 
     draw() {
         this.delete();
-        new HeaderComponent(new HeaderState(this.state.currentPage, this.state.isTraining)).draw();
+        let header = new HeaderComponent(new HeaderState(this.state.currentPage, this.state.isTraining), () => this.toggleTrainingMode());
+        this.root.prepend(header.draw());
 
         if(this.state.currentPage === 'main') {
-            new MenuCardsComponent(
+            let menu = new MenuCardsComponent(
                 new CategoryProvider().getCategories(),
-                new CategoryCardState(this.state.isTraining)
-                ).draw();
+                new MenuCardsState(this.state.isTraining)
+                );
+            this.root.append(menu.draw());
         } else {
-            new PlayCardsComponent(
+            let cards = new TrainingCardsComponent(
                 this.state.currentPage, 
                 new CategoryProvider().getCategoriesWordsAndTranslations(this.state.currentPage),
-                new PlayCardsState(this.state.isTraining)
-            ).draw();
+                new TrainingCardsState(this.state.isTraining)
+            );
+            this.root.append(cards.draw());
         } 
     }
 
@@ -43,13 +46,17 @@ export class PageComponent {
         }
     }
 
-    changeCategory(newCategory){
+    changeCategory(newCategory) {
         this.changeState(new PageState(newCategory,this.state.isTraining));
     }
 
     changeState(newState) {
         this.state = newState;
         this.draw();
+    }
+
+    toggleTrainingMode() {
+        this.changeState(new PageState(this.state.currentPage, !this.state.isTraining));
     }
 }
 

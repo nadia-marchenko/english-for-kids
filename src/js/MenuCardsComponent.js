@@ -1,25 +1,25 @@
-import { CategoryCardComponent, CategoryCardState } from "./CategoryCardComponent";
+import { MenuCardComponent, MenuCardState } from "./MenuCardComponent";
 
 export class MenuCardsComponent {
     constructor(categories, state) {
         this.categories = categories;
         this.state = state;
+        this.root = document.createElement('main');
     }
     draw() {
-        const root = `<main>
-                        <div class="wrapper main__wrapper">
+        const wrapper = `<div class="wrapper main__wrapper">
                             <div class="cards__wrapper">
                                 <div class="row">
                                 </div>
                             </div>
-                        </div>
-                    </main>`;
-        document.body.insertAdjacentHTML("beforeend", root);
+                        </div>`;
+        this.root.insertAdjacentHTML('beforeend', wrapper);
 
         for (let i = 0; i < this.categories.length; i++) {
-            document.querySelector('.row').insertAdjacentHTML("beforeend", new CategoryCardComponent(this.categories[i], new CategoryCardState(this.state.isTraining)).draw());
+            this.root.querySelector('.row').insertAdjacentHTML("beforeend", new MenuCardComponent(this.categories[i], new MenuCardState(this.state.isTraining)).draw());
         }
-        
+
+        return this.root;
     }
 }
 

@@ -1,19 +1,19 @@
 import { TrainingCardComponent } from "./TrainingCardComponent";
 import { PlayButtonComponent } from "./PlayButtonComponent";
 
-export class PlayCardsComponent {
+export class TrainingCardsComponent {
     
     constructor (category, wordsAndTranslations, state) {
         this.category = category;
         this.wordsAndTranslations = wordsAndTranslations;
         this.state = state;
+        this.root = document.createElement('main');
     }
 
     draw () {
-        const root = `<main>
-                        <div class="wrapper main__wrapper">
+        const wrapper = `<div class="wrapper main__wrapper">
 
-                            <ol class="breadcrumb play-mode">
+                            <ol class="breadcrumb ${!this.state.isTraining ? 'play-mode' : ""}">
                                 <li class="breadcrumb-item">
                                     <a href="#">Home</a>
                                 </li>
@@ -26,22 +26,22 @@ export class PlayCardsComponent {
                                 <div class="row">
                                 </div>
                             </div>
-                        </div>
-                    </main>`;
-        
-        document.body.insertAdjacentHTML("beforeend", root);
+                        </div>`;
+        this.root.insertAdjacentHTML("beforeend", wrapper);
 
         for (let i = 0; i < this.wordsAndTranslations.length; i++) {
-            document.querySelector('.row').append(new TrainingCardComponent(this.wordsAndTranslations[i].word, this.wordsAndTranslations[i].translation).draw());
+            this.root.querySelector('.row').append(new TrainingCardComponent(this.wordsAndTranslations[i].word, this.wordsAndTranslations[i].translation).draw());
             
         }
         if(!this.state.isTraining) {
-            new PlayButtonComponent().draw();
+            let button = new PlayButtonComponent();
+            this.root.querySelector('.main__wrapper').append(button.draw());
         }
+        return this.root;
     }
 }
 
-export class PlayCardsState {
+export class TrainingCardsState {
     constructor(isTraining) {
         this.isTraining = isTraining;
     }

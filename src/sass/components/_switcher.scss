@@ -63,6 +63,7 @@
 .switch-input:checked ~ .switch-label:before {
 	opacity: 0;
 }
+
 .switch-input:checked ~ .switch-label:after {
 	opacity: 1;
 }
