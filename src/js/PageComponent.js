@@ -1,7 +1,8 @@
 import { HeaderComponent, HeaderState } from "./HeaderComponent";
 import { MenuCardsComponent, MenuCardsState } from "./MenuCardsComponent";
 import { CategoryProvider } from "./CategoryProvider";
-import { TrainingCardsComponent, TrainingCardsState } from "./TrainingCardsComponent";
+import { TrainingComponent, TrainingState } from "./TrainingComponent";
+import { PlayState, PlayComponent } from "./PlayComponent";
 
 //Import images
 function importAll (r) {
@@ -28,12 +29,21 @@ export class PageComponent {
                 );
             this.root.append(menu.draw());
         } else {
-            let cards = new TrainingCardsComponent(
-                this.state.currentPage, 
-                new CategoryProvider().getCategoriesWordsAndTranslations(this.state.currentPage),
-                new TrainingCardsState(this.state.isTraining)
-            );
-            this.root.append(cards.draw());
+            if (this.state.isTraining) {
+                let cards = new TrainingComponent(
+                    this.state.currentPage, 
+                    new CategoryProvider().getCategoriesWordsAndTranslations(this.state.currentPage),
+                    new TrainingState(this.state.isTraining)
+                );
+                this.root.append(cards.draw());
+            } else {
+                let cards = new PlayComponent(
+                    this.state.currentPage, 
+                    new CategoryProvider().getCategoriesWordsAndTranslations(this.state.currentPage),
+                    new PlayState(this.state.isTraining)
+                );
+                this.root.append(cards.draw());
+            }
         } 
     }
 

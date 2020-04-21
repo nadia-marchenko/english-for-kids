@@ -1,7 +1,6 @@
 import { TrainingCardComponent } from "./TrainingCardComponent";
-import { PlayButtonComponent } from "./PlayButtonComponent";
 
-export class TrainingCardsComponent {
+export class TrainingComponent {
     
     constructor (category, wordsAndTranslations, state) {
         this.category = category;
@@ -33,15 +32,11 @@ export class TrainingCardsComponent {
             this.root.querySelector('.row').append(new TrainingCardComponent(this.wordsAndTranslations[i].word, this.wordsAndTranslations[i].translation).draw());
             
         }
-        if(!this.state.isTraining) {
-            let button = new PlayButtonComponent();
-            this.root.querySelector('.main__wrapper').append(button.draw());
-        }
         return this.root;
     }
 }
 
-export class TrainingCardsState {
+export class TrainingState {
     constructor(isTraining) {
         this.isTraining = isTraining;
     }
