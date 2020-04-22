@@ -1,0 +1,16 @@
+.star {
+    background-image: url(../assets/icon-star.svg);
+    width: 32px;
+    height: 32px;
+}
+
+.rating {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.lose-star {
+    background-image: url(../assets/icon-star-error.svg);
+    width: 32px;
+    height: 32px;
+}

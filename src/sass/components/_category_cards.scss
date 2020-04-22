@@ -1,5 +1,5 @@
 .cards__wrapper {
-    margin-top: 25px;
+    margin-top: 10px;
 }
 
 .card {
@@ -40,4 +40,8 @@
     display: flex;
     justify-content: space-between;
     padding-bottom: 6px;
+}
+
+.correct-card {
+    opacity: 0.6;
 }

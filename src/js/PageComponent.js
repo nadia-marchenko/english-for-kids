@@ -8,8 +8,8 @@ import { PlayState, PlayComponent } from "./PlayComponent";
 function importAll (r) {
     r.keys().forEach(r);
   }
-importAll(require.context('../assets/categories', true, /\.jpeg$/));
-importAll(require.context('../assets/categories', true, /\.mp3$/));
+importAll(require.context('../assets', true, /\.jpeg$/));
+importAll(require.context('../assets', true, /\.mp3$/));
 
 export class PageComponent {
     constructor (state) {
@@ -40,7 +40,12 @@ export class PageComponent {
                 let cards = new PlayComponent(
                     this.state.currentPage, 
                     new CategoryProvider().getCategoriesWordsAndTranslations(this.state.currentPage),
-                    new PlayState(this.state.isTraining)
+                    new PlayState(
+                        this.state.isTraining, 
+                        'NOT_STARTED', 
+                        [], 
+                        [0, 1, 2, 3, 4, 5, 6, 7], 
+                        0)
                 );
                 this.root.append(cards.draw());
             }
