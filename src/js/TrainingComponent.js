@@ -1,15 +1,14 @@
-import { TrainingCardComponent } from "./TrainingCardComponent";
+import TrainingCardComponent from './TrainingCardComponent';
 
-export class TrainingComponent {
-    
-    constructor (category, wordsAndTranslations) {
-        this.category = category;
-        this.wordsAndTranslations = wordsAndTranslations;
-        this.root = document.createElement('main');
-    }
+export default class TrainingComponent {
+  constructor(category, wordsAndTranslations) {
+    this.category = category;
+    this.wordsAndTranslations = wordsAndTranslations;
+    this.root = document.createElement('main');
+  }
 
-    draw () {
-        const wrapper = `<div class="wrapper main__wrapper">
+  draw() {
+    const wrapper = `<div class="wrapper main__wrapper">
 
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
@@ -25,12 +24,11 @@ export class TrainingComponent {
                                 </div>
                             </div>
                         </div>`;
-        this.root.insertAdjacentHTML("beforeend", wrapper);
+    this.root.insertAdjacentHTML('beforeend', wrapper);
 
-        for (let i = 0; i < this.wordsAndTranslations.length; i++) {
-            this.root.querySelector('.row').append(new TrainingCardComponent(this.wordsAndTranslations[i].word, this.wordsAndTranslations[i].translation).draw());
-            
-        }
-        return this.root;
+    for (let i = 0; i < this.wordsAndTranslations.length; i += 1) {
+      this.root.querySelector('.row').append(new TrainingCardComponent(this.wordsAndTranslations[i].word, this.wordsAndTranslations[i].translation).draw());
     }
+    return this.root;
+  }
 }
