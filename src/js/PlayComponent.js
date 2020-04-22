@@ -1,21 +1,25 @@
-import { PlayCardComponent, PlayCardState } from "./PlayCardComponent";
-import { PlayButtonComponent, PlayButtonState } from "./PlayButtonComponent";
-import { StarLineComponent, StarLineState } from "./StarLineComponent";
+import { PlayCardComponent } from "./PlayCardComponent";
+import { PlayButtonComponent } from "./PlayButtonComponent";
+import { StarLineComponent } from "./StarLineComponent";
 
 export class PlayComponent {
     
-    constructor (category, wordsAndTranslations, state) {
+    constructor (category, wordsAndTranslations) {
         this.category = category;
         this.wordsAndTranslations = wordsAndTranslations;
-        this.state = state;
         this.root = document.createElement('main');
         this.cards = [];
+        //state
+        this.playStatus = 'NOT_STARTED'; // NOT_STARTED, PLAYING, FINISHED
+        this.answersArray = [];
+        this.questionsArray = this.shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
+        this.currentQuestionIndex = 0;
     }
 
     draw () {
         this.delete();
         const wrapper = `<div class="wrapper main__wrapper">
-                            <ol class="breadcrumb ${!this.state.isTraining ? 'play-mode' : ""}">
+                            <ol class="breadcrumb play-mode">
                                 <li class="breadcrumb-item">
                                     <a href="#">Home</a>
                                 </li>
@@ -34,44 +38,50 @@ export class PlayComponent {
 
         this.cards = [];
 
-        if (this.state.playStatus === 'NOT_STARTED' || this.state.playStatus === 'PLAYING') {
+        if (this.playStatus === 'NOT_STARTED' || this.playStatus === 'PLAYING') {
+            const isPlaying = this.playStatus === 'PLAYING';
             for (let i = 0; i < this.wordsAndTranslations.length; i++) {
-                let wasAnswered = this.state.questionsArray.indexOf(i) < this.state.currentQuestionIndex;
+                let wasAnswered = this.questionsArray.indexOf(i) < this.currentQuestionIndex;
                 let card = new PlayCardComponent(
                     i,
                     this.wordsAndTranslations[i].word, 
-                    new PlayCardState(wasAnswered, this.state.currentAudio, this.state.currentStarsArray),
-                    (id) => this.verifyAnswer(id));
+                    (id) => this.verifyAnswer(id),
+                    isPlaying,
+                    wasAnswered, this.currentStarsArray,
+                    );
                 this.cards.push(card);
                 this.root.querySelector('.row').append(card.draw());
             }
 
-            const buttonPlayStatus = this.state.playStatus === 'PLAYING';
-            let button = new PlayButtonComponent(new PlayButtonState(buttonPlayStatus), () => this.startPlay(), () => this.playCurrentAudio());
+            let button = new PlayButtonComponent(() => this.startPlay(), () => this.playCurrentAudio(), isPlaying);
             this.root.querySelector('.main__wrapper').append(button.draw());
 
-            this.root.querySelector('.titleCategory').after(new StarLineComponent(new StarLineState(this.state.answersArray)).draw());
+            this.root.querySelector('.titleCategory').after(new StarLineComponent(this.answersArray).draw());
 
-            if(this.state.playStatus === 'PLAYING' 
-                && (this.state.answersArray.length === 0 || this.state.answersArray[this.state.answersArray.length - 1] === 1)) {
+            if(this.playStatus === 'PLAYING' 
+                && (this.answersArray.length === 0 || this.answersArray[this.answersArray.length - 1] === 1)) {
                 this.playCurrentAudio();
             }
         }
 
-        if (this.state.playStatus === 'FINISHED') {
+        if (this.playStatus === 'FINISHED') {
             const audio = this.root.querySelector('.audio');
-            if(this.state.answersArray.includes(0)) {
+            const wrapper = this.root.querySelector('.main__wrapper');
+            if(this.answersArray.includes(0)) {
+                const numWrongs = this.answersArray.filter(answer => answer === 0).length;
+                wrapper.insertAdjacentHTML('beforeend', `<h2>Numbers of wrong answers: ${numWrongs}</h2>`);
+                
                 const fail = `<div>
                             <img class = 'fail img-fluid' src = 'images/fail.jpeg'>
                         </div>`;
                 audio.src = `audio/fail.mp3`;
-                this.root.querySelector('.main__wrapper').insertAdjacentHTML('beforeend', fail);
+                wrapper.insertAdjacentHTML('beforeend', fail);
             } else {
                 const success = `<div>
                                 <img class = 'success img-fluid' src = 'images/success.jpeg'>
                             </div>`;
                 audio.src = `audio/success.mp3`;
-                this.root.querySelector('.main__wrapper').insertAdjacentHTML('beforeend', success);
+                wrapper.insertAdjacentHTML('beforeend', success);
             }
             
             audio.play();
@@ -83,22 +93,18 @@ export class PlayComponent {
         return this.root;
     }
 
-    changeState(newState) {
-        this.state = newState;
+    startPlay() {
+        this.playStatus = 'PLAYING';
         this.draw();
     }
 
-    startPlay() {
-        this.changeState(new PlayState(this.state.isTraining, 'PLAYING', this.state.answersArray, this.state.questionsArray, this.state.currentQuestionIndex));
-    }
-
     playCurrentAudio() {
-        this.cards[this.state.questionsArray[this.state.currentQuestionIndex]].playAudio();
+        this.cards[this.questionsArray[this.currentQuestionIndex]].playAudio();
     }
 
     verifyAnswer(clickedCardId) {
         const audio = this.root.querySelector('.audio');
-        if(clickedCardId === this.state.questionsArray[this.state.currentQuestionIndex]) {
+        if(clickedCardId === this.questionsArray[this.currentQuestionIndex]) {
             audio.src = `audio/correct-answer.mp3`;
             audio.play();
             setTimeout( () => {
@@ -114,25 +120,15 @@ export class PlayComponent {
     }
 
     recordCorrectAnswer() {
-        this.state.answersArray.push(1);
-        this.changeState(new PlayState(
-            this.state.isTraining, 
-            this.state.currentQuestionIndex === 7 ? "FINISHED" : "PLAYING",
-            this.state.answersArray, 
-            this.state.questionsArray, 
-            this.state.currentQuestionIndex + 1
-            ));
+        this.playStatus = this.currentQuestionIndex === 7 ? "FINISHED" : "PLAYING";
+        this.currentQuestionIndex = this.currentQuestionIndex + 1;
+        this.answersArray.push(1);
+        this.draw();
     }
 
     recordWrongAnswer() {
-        this.state.answersArray.push(0);
-        this.changeState(new PlayState(
-            this.state.isTraining, 
-            this.state.playStatus, 
-            this.state.answersArray, 
-            this.state.questionsArray, 
-            this.state.currentQuestionIndex
-            ));
+        this.answersArray.push(0);
+        this.draw();
     }
 
     delete() {
@@ -141,14 +137,15 @@ export class PlayComponent {
         }
     } 
 
- }
-
-export class PlayState {
-    constructor(isTraining, playStatus, answersArray, questionsArray, currentQuestionIndex) {
-        this.isTraining = isTraining;
-        this.playStatus = playStatus; // NOT_STARTED, PLAYING, FINISHED
-        this.answersArray = answersArray;
-        this.questionsArray = questionsArray;
-        this.currentQuestionIndex = currentQuestionIndex;
+    shuffle(a) {
+        var j, x, i;
+        for (i = a.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * (i + 1));
+            x = a[i];
+            a[i] = a[j];
+            a[j] = x;
+        }
+        return a;
     }
-}
+
+ }

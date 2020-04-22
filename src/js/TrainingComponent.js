@@ -2,17 +2,16 @@ import { TrainingCardComponent } from "./TrainingCardComponent";
 
 export class TrainingComponent {
     
-    constructor (category, wordsAndTranslations, state) {
+    constructor (category, wordsAndTranslations) {
         this.category = category;
         this.wordsAndTranslations = wordsAndTranslations;
-        this.state = state;
         this.root = document.createElement('main');
     }
 
     draw () {
         const wrapper = `<div class="wrapper main__wrapper">
 
-                            <ol class="breadcrumb ${!this.state.isTraining ? 'play-mode' : ""}">
+                            <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
                                     <a href="#">Home</a>
                                 </li>
@@ -33,11 +32,5 @@ export class TrainingComponent {
             
         }
         return this.root;
-    }
-}
-
-export class TrainingState {
-    constructor(isTraining) {
-        this.isTraining = isTraining;
     }
 }

@@ -1,24 +1,23 @@
-import { StarLineComponent } from "./StarLineComponent";
-
 export class PlayButtonComponent {
-    constructor(state, startPlay, repeatAudio) {
+    constructor(startPlay, repeatAudio, isPlay) {
         this.root = document.createElement('div');
-        this.state = state;
         this.startPlay = startPlay;
         this.repeatAudio = repeatAudio;
+        //state
+        this.isPlay = isPlay;
     }
     draw() {
         let button = `<button type="button" class="btn btn-primary btn-lg btn-block btn-danger">Play</button>`;
         this.root.insertAdjacentHTML('beforeend', button);
 
         let playButton = this.root.querySelector('.btn');
-        if(this.state.isPlay) {
+        if(this.isPlay) {
             playButton.classList.add('repeat-button');
             playButton.innerHTML = "";
         }
 
         playButton.onclick = () => {
-            if(!this.state.isPlay) {
+            if(!this.isPlay) {
                 this.startPlay();
             } else {
                 this.repeatAudio();
@@ -26,12 +25,5 @@ export class PlayButtonComponent {
             
         };
         return this.root;
-    }
-}
-
-export class PlayButtonState {
-    constructor(isPlay, currentAudio) {
-        this.isPlay = isPlay;
-        this.currentAudio = currentAudio;
     }
 }

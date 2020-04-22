@@ -1,4 +1,4 @@
-import { PageComponent, PageState } from './js/PageComponent';
+import { PageComponent } from './js/PageComponent';
 
 function getCategoryFromURL() {
     if(window.location.hash === "") {
@@ -9,7 +9,7 @@ function getCategoryFromURL() {
 }
 
 const currentCategory = getCategoryFromURL();
-const page = new PageComponent(new PageState(currentCategory, false));
+const page = new PageComponent(currentCategory, true);
 
 page.draw();
 

@@ -1,8 +1,9 @@
 export class SwitcherComponent {
-    constructor(state, toggleTrainingMode) {
-        this.state = state;
+    constructor(toggleTrainingMode, isTraining) {
         this.toggleTrainingMode = toggleTrainingMode;
         this.root = document.createElement('div');
+        //state
+        this.isTraining = isTraining;
     }
 
     draw() {
@@ -13,19 +14,16 @@ export class SwitcherComponent {
         </label>`;
         this.root.insertAdjacentHTML("beforeend", newSwitcher);
         
-        if (this.state.isTraining) {
+        if (this.isTraining) {
             this.root.querySelector('.switch-input').checked = true;
         } 
         this.root.querySelector('.switch-input').onclick = () => {
-            this.toggleTrainingMode();
+            setTimeout( () => {
+                this.toggleTrainingMode();
+              }, 400);
+            
         }
 
         return this.root;
     }   
-}
-
-export class SwitcherState {
-    constructor(isTraining) {
-        this.isTraining = isTraining;
-    }
 }

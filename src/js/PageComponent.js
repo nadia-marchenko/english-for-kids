@@ -1,8 +1,8 @@
-import { HeaderComponent, HeaderState } from "./HeaderComponent";
-import { MenuCardsComponent, MenuCardsState } from "./MenuCardsComponent";
+import { HeaderComponent } from "./HeaderComponent";
+import { MenuCardsComponent } from "./MenuCardsComponent";
 import { CategoryProvider } from "./CategoryProvider";
-import { TrainingComponent, TrainingState } from "./TrainingComponent";
-import { PlayState, PlayComponent } from "./PlayComponent";
+import { TrainingComponent } from "./TrainingComponent";
+import { PlayComponent } from "./PlayComponent";
 
 //Import images
 function importAll (r) {
@@ -12,40 +12,39 @@ importAll(require.context('../assets', true, /\.jpeg$/));
 importAll(require.context('../assets', true, /\.mp3$/));
 
 export class PageComponent {
-    constructor (state) {
-        this.state = state;
+    constructor (currentPage, isTraining) {
         this.root = document.body;
+        //state
+        this.currentPage = currentPage;
+        this.isTraining = isTraining;
     }
 
     draw() {
         this.delete();
-        let header = new HeaderComponent(new HeaderState(this.state.currentPage, this.state.isTraining), () => this.toggleTrainingMode());
+        let header = new HeaderComponent(() => this.toggleTrainingMode(), this.currentPage, this.isTraining);
         this.root.prepend(header.draw());
 
-        if(this.state.currentPage === 'main') {
+        if(this.currentPage === 'main') {
             let menu = new MenuCardsComponent(
                 new CategoryProvider().getCategories(),
-                new MenuCardsState(this.state.isTraining)
-                );
+                this.isTraining
+            );
             this.root.append(menu.draw());
         } else {
-            if (this.state.isTraining) {
+            if (this.isTraining) {
                 let cards = new TrainingComponent(
-                    this.state.currentPage, 
-                    new CategoryProvider().getCategoriesWordsAndTranslations(this.state.currentPage),
-                    new TrainingState(this.state.isTraining)
+                    this.currentPage, 
+                    new CategoryProvider().getCategoriesWordsAndTranslations(this.currentPage)
                 );
                 this.root.append(cards.draw());
             } else {
                 let cards = new PlayComponent(
-                    this.state.currentPage, 
-                    new CategoryProvider().getCategoriesWordsAndTranslations(this.state.currentPage),
-                    new PlayState(
-                        this.state.isTraining, 
-                        'NOT_STARTED', 
-                        [], 
-                        [0, 1, 2, 3, 4, 5, 6, 7], 
-                        0)
+                    this.currentPage, 
+                    new CategoryProvider().getCategoriesWordsAndTranslations(this.currentPage),
+                    'NOT_STARTED', 
+                    [], 
+                    [0, 1, 2, 3, 4, 5, 6, 7], 
+                    0
                 );
                 this.root.append(cards.draw());
             }
@@ -62,22 +61,12 @@ export class PageComponent {
     }
 
     changeCategory(newCategory) {
-        this.changeState(new PageState(newCategory,this.state.isTraining));
-    }
-
-    changeState(newState) {
-        this.state = newState;
+        this.currentPage = newCategory;
         this.draw();
     }
 
     toggleTrainingMode() {
-        this.changeState(new PageState(this.state.currentPage, !this.state.isTraining));
-    }
-}
-
-export class PageState {
-    constructor(currentPage, isTraining) {
-        this.currentPage = currentPage;
-        this.isTraining = isTraining;
+        this.isTraining = !this.isTraining;
+        this.draw();
     }
 }

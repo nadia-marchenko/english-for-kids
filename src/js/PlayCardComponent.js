@@ -1,10 +1,13 @@
 export class PlayCardComponent {
-    constructor(id, word, state, tap) {
+    constructor(id, word, tap, isPlaying, wasAnswered, currentStarsArray) {
         this.id = id;
         this.word = word;
-        this.state = state;
         this.tap = tap;
         this.root = document.createElement('div');
+        //state
+        this.isPlaying = isPlaying;
+        this.wasAnswered = wasAnswered;
+        this.currentStarsArray = currentStarsArray;
     }
     draw() {
         this.root.classList = 'col-md-3 col-sm-6';
@@ -17,12 +20,14 @@ export class PlayCardComponent {
         
         this.root.insertAdjacentHTML('afterbegin', playingCard);
 
-        if(this.state.wasAnswered) {
+        if(this.wasAnswered) {
             this.root.querySelector('.card-img-top').classList.add('correct-card');
         }
 
-        this.root.querySelector('.card').onclick = () => {
-            this.tap(this.id);
+        if(this.isPlaying && !this.wasAnswered) {
+            this.root.querySelector('.card').onclick = () => {
+                this.tap(this.id);
+            }
         }
         
         return this.root;
@@ -32,13 +37,5 @@ export class PlayCardComponent {
         const audio = this.root.querySelector('.audio');
         audio.src = `audio/${this.word}.mp3`;
         audio.play();
-    }
-}
-
-export class PlayCardState {
-    constructor(wasAnswered, currentAudio, currentStarsArray) {
-        this.wasAnswered = wasAnswered;
-        this.currentAudio = currentAudio;
-        this.currentStarsArray = currentStarsArray;
     }
 }
