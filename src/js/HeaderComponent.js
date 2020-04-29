@@ -2,25 +2,34 @@ import MenuComponent from './MenuComponent';
 import SwitcherComponent from './SwitcherComponent';
 
 export default class HeaderComponent {
-  constructor(toggleTrainingMode, currentPage, isTraining) {
+  constructor(toggleTrainingMode) {
     this.toggleTrainingMode = toggleTrainingMode;
     this.root = document.createElement('header');
-    // state
-    this.currentPage = currentPage;
-    this.isTraining = isTraining;
+    this.menu = new MenuComponent();
+    this.switcher = new SwitcherComponent(this.toggleTrainingMode);
   }
 
-  draw() {
+  init(currentPage) {
     const wrapper = `<div class="wrapper header__wrapper" id="header__wrapper">
                         </div>`;
     this.root.insertAdjacentHTML('beforeend', wrapper);
 
-    const menu = new MenuComponent(false, this.currentPage, this.isTraining);
-    this.root.querySelector('.header__wrapper').append(menu.draw());
+    this.root.querySelector('.header__wrapper').append(this.menu.init(currentPage));
 
-    const switcher = new SwitcherComponent(this.toggleTrainingMode, this.isTraining);
-    this.root.querySelector('.header__wrapper').append(switcher.draw());
+    this.root.querySelector('.header__wrapper').append(this.switcher.init());
 
     return this.root;
+  }
+
+  changeCurrentPage(currentPage) {
+    this.menu.changeCurrentPage(currentPage);
+  }
+
+  hide() {
+    this.root.classList.add('hidden');
+  }
+
+  togglePlayMode() {
+    this.menu.togglePlayMode();
   }
 }

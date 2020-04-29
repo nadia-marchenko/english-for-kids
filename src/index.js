@@ -7,11 +7,11 @@ function getCategoryFromURL() {
   return window.location.hash.slice(2);
 }
 
-const currentCategory = getCategoryFromURL();
-const page = new PageComponent(currentCategory, true);
+const currentPage = getCategoryFromURL();
+const page = new PageComponent();
 
-page.draw();
+page.init(currentPage);
 
 window.onhashchange = function () {
-  page.changeCategory(getCategoryFromURL());
+  page.changeCurrentPage(getCategoryFromURL());
 };

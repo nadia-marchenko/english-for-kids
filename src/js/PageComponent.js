@@ -12,63 +12,78 @@ importAll(require.context('../assets', true, /\.jpeg$/));
 importAll(require.context('../assets', true, /\.mp3$/));
 
 export default class PageComponent {
-  constructor(currentPage, isTraining) {
+  constructor() {
     this.root = document.body;
-    // state
+    this.header = new HeaderComponent(() => this.togglePlayMode());
+    this.menuCards = new MenuCardsComponent(new CategoryProvider().getCategories(), true);
+    this.trainingCards = new TrainingComponent();
+    this.playingCards = new PlayComponent();
+    this.currentPage = undefined;
+    this.isPlayMode = undefined;
+  }
+
+  init(currentPage) {
     this.currentPage = currentPage;
-    this.isTraining = isTraining;
-  }
+    this.isPlayMode = false;
 
-  draw() {
-    this.delete();
-    const header = new HeaderComponent(
-      () => this.toggleTrainingMode(),
-      this.currentPage,
-      this.isTraining,
-    );
-    this.root.prepend(header.draw());
+    this.root.prepend(this.header.init(currentPage));
+    this.root.append(this.menuCards.draw());
+    this.root.append(this.trainingCards.draw(currentPage));
+    this.root.append(this.playingCards.init(currentPage));
 
-    if (this.currentPage === 'main') {
-      const menu = new MenuCardsComponent(
-        new CategoryProvider().getCategories(),
-        this.isTraining,
-      );
-      this.root.append(menu.draw());
-    } else if (this.isTraining) {
-      const cards = new TrainingComponent(
-        this.currentPage,
-        new CategoryProvider().getCategoriesWordsAndTranslations(this.currentPage),
-      );
-      this.root.append(cards.draw());
+
+    if(currentPage === 'main') {
+      this.trainingCards.hide();
     } else {
-      const cards = new PlayComponent(
-        this.currentPage,
-        new CategoryProvider().getCategoriesWordsAndTranslations(this.currentPage),
-        'NOT_STARTED',
-        [],
-        [0, 1, 2, 3, 4, 5, 6, 7],
-        0,
-      );
-      this.root.append(cards.draw());
+      this.menuCards.hide();
+    }
+
+    if(!this.isPlayMode) {
+      this.playingCards.hide();
     }
   }
 
-  delete() {
-    if (this.root.querySelector('header')) {
-      this.root.querySelector('header').remove();
+  changeCurrentPage(newPage) {
+    this.header.changeCurrentPage(newPage);
+
+    if (this.currentPage == 'main') {
+        this.menuCards.hide();
+    } else {
+      if(this.isPlayMode){
+        this.playingCards.hide();
+      } else {
+        this.trainingCards.hide();
+      }
     }
-    if (this.root.querySelector('main')) {
-      this.root.querySelector('main').remove();
+
+    this.currentPage = newPage;
+
+    if(this.currentPage != 'main') {
+      this.trainingCards.changeCurrentPage(newPage);
+      this.playingCards.changeCurrentPage(newPage);
+    }
+
+    if (this.currentPage == 'main') {
+      this.menuCards.show();
+    } else {
+      if(this.isPlayMode) {
+        this.playingCards.show();
+      } else {
+        this.trainingCards.show();
+      }
     }
   }
 
-  changeCategory(newCategory) {
-    this.currentPage = newCategory;
-    this.draw();
-  }
-
-  toggleTrainingMode() {
-    this.isTraining = !this.isTraining;
-    this.draw();
+  togglePlayMode() {
+    this.isPlayMode = !this.isPlayMode;
+    this.header.togglePlayMode();
+    this.menuCards.togglePlayMode();
+    if(this.isPlayMode) {
+      this.trainingCards.hide();
+      this.playingCards.show();
+    } else {
+      this.playingCards.hide();
+      this.trainingCards.show();
+    }
   }
 }

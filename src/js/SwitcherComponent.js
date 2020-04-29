@@ -1,12 +1,10 @@
 export default class SwitcherComponent {
-  constructor(toggleTrainingMode, isTraining) {
+  constructor(toggleTrainingMode, isPlayMode) {
     this.toggleTrainingMode = toggleTrainingMode;
     this.root = document.createElement('div');
-    // state
-    this.isTraining = isTraining;
   }
 
-  draw() {
+  init() {
     const newSwitcher = `<label class='switch'>
             <input class="switch-input" type="checkbox" />
             <span class="switch-label" data-on="Train" data-off="Play"></span> 
@@ -14,13 +12,10 @@ export default class SwitcherComponent {
         </label>`;
     this.root.insertAdjacentHTML('beforeend', newSwitcher);
 
-    if (this.isTraining) {
-      this.root.querySelector('.switch-input').checked = true;
-    }
+    this.root.querySelector('.switch-input').checked = true;
+
     this.root.querySelector('.switch-input').onclick = () => {
-      setTimeout(() => {
         this.toggleTrainingMode();
-      }, 400);
     };
 
     return this.root;

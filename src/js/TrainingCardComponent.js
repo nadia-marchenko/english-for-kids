@@ -2,49 +2,74 @@ export default class TrainingCardComponent {
   constructor(word, translation) {
     this.word = word;
     this.translation = translation;
+    this.root = document.createElement('div');
   }
 
-  draw() {
-    const root = document.createElement('div');
-    root.classList = 'col-md-3 col-sm-6';
+  init() {
+    this.root.classList = 'col-md-3 col-sm-6';
 
-    const trainingCard = `<div class="card" id="${this.word}">    
+    const trainingCard = this.createHtmlCard(this.word, this.translation)
+
+    this.root.insertAdjacentHTML('afterbegin', trainingCard);
+
+    this.root.querySelector('.card').onclick = () => {
+      const audio = this.root.querySelector('.audio');
+      audio.src = `audio/${this.word}.mp3`;
+      audio.play();
+    };
+
+    this.root.querySelector('.icon').onclick = (ev) => {
+      this.root.querySelector('.flip-card-inner').classList.add('rotate');
+      ev.stopPropagation();
+    };
+
+    this.root.querySelector('.flip-card-back').onmouseleave = () => {
+      this.root.querySelector('.flip-card-inner').classList.remove('rotate');
+    };
+    return this.root;
+  }
+
+  createHtmlCard(word, translation) {
+    return `<div class="card" id="${word}">    
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front">
-                                    <img class="card-img-top" src="images/${this.word}.jpeg" alt="${this.word}">
+                                    <img class="card-img-top" src="images/${word}.jpeg" alt="${word}">
                                     <div class="card-body card-game">
-                                        <p class="card-text">${this.word[0].toUpperCase() + this.word.slice(1)}</p>
+                                        <p class="card-text">${word[0].toUpperCase() + word.slice(1)}</p>
                                         <span class="icon"></span>
                                     </div>
                                 </div>
                                 <div class="flip-card-back rotate">
-                                    <img class="card-img-top" src="images/${this.word}.jpeg" alt="${this.word}">
+                                    <img class="card-img-top" src="images/${word}.jpeg" alt="${word}">
                                     <div class="card-body card-game">
-                                        <p class="card-text">${this.translation[0].toUpperCase() + this.translation.slice(1)}</p>
+                                        <p class="card-text">${translation[0].toUpperCase() + translation.slice(1)}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <audio class="audio"></audio>
                     </div>`;
+  }
 
-    root.insertAdjacentHTML('afterbegin', trainingCard);
-
-    root.querySelector('.card').onclick = () => {
-      const audio = root.querySelector('.audio');
+  changeCardContent(word, translation) {
+    this.word = word;
+    
+    this.root.innerHTML = this.createHtmlCard(word, translation);
+    this.root.querySelector('.card').onclick = () => {
+      const audio = this.root.querySelector('.audio');
       audio.src = `audio/${this.word}.mp3`;
       audio.play();
     };
 
-    root.querySelector('.icon').onclick = (ev) => {
-      root.querySelector('.flip-card-inner').classList.add('rotate');
+    this.root.querySelector('.icon').onclick = (ev) => {
+      this.root.querySelector('.flip-card-inner').classList.add('rotate');
       ev.stopPropagation();
     };
 
-    root.querySelector('.flip-card-back').onmouseleave = () => {
-      root.querySelector('.flip-card-inner').classList.remove('rotate');
+    this.root.querySelector('.flip-card-back').onmouseleave = () => {
+      this.root.querySelector('.flip-card-inner').classList.remove('rotate');
     };
-    return root;
   }
+
 }

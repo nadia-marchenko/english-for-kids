@@ -5,7 +5,7 @@ export default class PlayCardComponent {
     this.tap = tap;
     this.root = document.createElement('div');
     // state
-    this.isPlaying = isPlaying;
+    //this.isPlaying = isPlaying;
     this.wasAnswered = wasAnswered;
     this.currentStarsArray = currentStarsArray;
   }
@@ -13,23 +13,9 @@ export default class PlayCardComponent {
   draw() {
     this.root.classList = 'col-md-3 col-sm-6';
 
-    const playingCard = `<div class="card" id="${this.word}">    
-                                <img class="card-img-top" src="images/${this.word}.jpeg" alt="${this.word}">
-                            </div>
-                    <audio class="audio"></audio>
-                </div>`;
+    const playingCard = this.createHtmlCard(this.word);
 
     this.root.insertAdjacentHTML('afterbegin', playingCard);
-
-    if (this.wasAnswered) {
-      this.root.querySelector('.card-img-top').classList.add('correct-card');
-    }
-
-    if (this.isPlaying && !this.wasAnswered) {
-      this.root.querySelector('.card').onclick = () => {
-        this.tap(this.id);
-      };
-    }
 
     return this.root;
   }
@@ -39,4 +25,37 @@ export default class PlayCardComponent {
     audio.src = `audio/${this.word}.mp3`;
     audio.play();
   }
+
+  createHtmlCard(word) {
+    return `<div class="card" id="${word}">    
+              <img class="card-img-top" src="images/${word}.jpeg" alt="${word}">
+              <audio class="audio"></audio>`;
+  }
+
+  changeCardContent(word) {
+    this.root.innerHTML = this.createHtmlCard(word);
+    this.word = word;
+  }
+
+  hide() {
+    this.root.classList.add('hidden');
+  }
+
+  show() {
+    this.root.classList.remove('hidden');
+  }
+
+  startPlay() {
+    this.root.querySelector('.card').onclick = () => {
+      this.tap(this.id);
+    };
+  }
+
+  recordCorrectAnswer() {
+    this.root.querySelector('.card-img-top').classList.add('correct-card');
+    this.root.querySelector('.card').onclick = () => {
+      return false;
+    };
+  }
+
 }

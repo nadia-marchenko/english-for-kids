@@ -1,25 +1,37 @@
 export default class StarLineComponent {
-  constructor(answersArray) {
+  constructor() {
     this.root = document.createElement('div');
     // state
-    this.answersArray = answersArray;
   }
 
-  draw() {
+  init() {
     this.root.className = 'rating';
     let string = '';
 
-    for (let i = 0; i < this.answersArray.length; i += 1) {
-      if (this.answersArray[i]) {
-        const stars = '<div class = "star"></div>';
-        string += stars;
-      } else {
-        const stars = '<div class = "lose-star"></div>';
-        string += stars;
-      }
-    }
     this.root.insertAdjacentHTML('beforeend', string);
 
     return this.root;
   }
+
+  hide() {
+    this.root.classList.add('hidden');
+  }
+
+  show() {
+    this.root.classList.remove('hidden');
+  }
+
+  delete() {
+    this.root.innerHTML = '';
+  }
+
+  recordWrongAnswer() {
+    const stars = '<div class = "lose-star"></div>';
+    this.root.insertAdjacentHTML('beforeend', stars);
+  }
+  recordCorrectAnswer() {
+    const stars = '<div class = "star"></div>';
+    this.root.insertAdjacentHTML('beforeend', stars);
+  }
+
 }

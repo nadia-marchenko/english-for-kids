@@ -1,13 +1,9 @@
 export default class MenuComponent {
-  constructor(isOpened, currentPage, isTraining) {
+  constructor() {
     this.root = document.createElement('div');
-    // state
-    this.isOpened = isOpened;
-    this.currentPage = currentPage;
-    this.isTraining = isTraining;
   }
 
-  draw() {
+  init(currentPage) {
     if (this.root.querySelector('.header__burger')) {
       this.root.querySelector('.header__burger').remove();
       this.root.querySelector('.header__navigation').remove();
@@ -15,15 +11,13 @@ export default class MenuComponent {
 
     const menuItems = ['main', 'actions', 'adjectives', 'animals', 'clothes', 'emotions', 'flowers', 'food', 'kitchen'];
 
-    const couple = `<div class="header__burger ${this.isOpened ? 'active' : ''}" id="header__burger">
+    const couple = `<div class="header__burger" id="header__burger">
                             <span></span>
                         </div>
-                        <nav class="header__navigation ${this.isOpened ? 'active' : ''} 
-                        ${!this.isTraining ? 'play-mode' : ''}" id="header__navigation">
+                        <nav class="header__navigation" id="header__navigation">
                             <ul class="navigation navbar-nav mr-auto"> 
                                 ${menuItems.map((category) => `<li class="nav-item">
-                                        <a class="nav-link ${(this.currentPage === category) ? 'active' : ''}" 
-                                        href="/#/${category}">
+                                        <a class="nav-link ${currentPage === category ? 'active' : ''}" href="/#/${category}">
                                             ${category[0].toUpperCase() + category.slice(1)}
                                         </a>
                                     </li>`).reduce((a, b) => a + b)}
@@ -33,14 +27,37 @@ export default class MenuComponent {
     this.root.insertAdjacentHTML('afterbegin', couple);
 
     this.root.querySelector('.header__burger').onclick = () => {
-      this.toggle();
+      this.toggleMenu();
     };
+
+    this.root.querySelectorAll('a').forEach(a => a.onclick = () => {
+      this.toggleMenu();
+    });
 
     return this.root;
   }
 
-  toggle() {
-    this.isOpened = !this.isOpened;
-    this.draw();
+  toggleMenu() {
+
+    if (this.root.querySelector('.header__navigation').classList.contains('active')) {
+      this.root.querySelector('.header__navigation').classList.remove('active');
+      this.root.querySelector('.header__burger').classList.remove('active');
+    } else {
+      this.root.querySelector('.header__navigation').classList.add('active');
+      this.root.querySelector('.header__burger').classList.add('active');
+    }
+  }
+
+  togglePlayMode() {
+    if(this.root.querySelector('.header__navigation').classList.contains('play-mode')) {
+      this.root.querySelector('.header__navigation').classList.remove('play-mode');
+    } else {
+      this.root.querySelector('.header__navigation').classList.add('play-mode');
+    }
+  }
+
+  changeCurrentPage(currentPage) {
+    this.root.querySelector('.nav-link.active').classList.remove('active');
+    this.root.querySelector(`a[href*="${currentPage}"]`).classList.add('active');
   }
 }
