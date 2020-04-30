@@ -1,5 +1,6 @@
 import TrainingCardComponent from './TrainingCardComponent';
 import CategoryProvider from './CategoryProvider';
+import Helper from './Helper';
 
 export default class TrainingComponent {
   constructor() {
@@ -8,7 +9,7 @@ export default class TrainingComponent {
     this.cards = [];
   }
 
-  draw(currentPage) {
+  init(currentPage) {
     const wordsAndTranslations = this.categoryProvider.getCategoriesWordsAndTranslations(currentPage);
     const wrapper = `<div class="wrapper main__wrapper">
                             <ol class="breadcrumb">
@@ -16,10 +17,10 @@ export default class TrainingComponent {
                                     <a href="#">Home</a>
                                 </li>
                                 <li class="breadcrumb-item active">
-                                    ${currentPage[0].toUpperCase() + currentPage.slice(1)}
+                                    ${Helper.createPageName(currentPage)}
                                 </li>
                             </ol>
-                            <h1 class="titleCategory">${currentPage[0].toUpperCase() + currentPage.slice(1)}</h1>
+                            <h1 class="titleCategory">${Helper.createPageName(currentPage)}</h1>
                             <div class="cards__wrapper">
                                 <div class="row">
                                 </div>
@@ -49,8 +50,8 @@ export default class TrainingComponent {
       this.cards[i].changeCardContent(wordsAndTranslations[i].word, wordsAndTranslations[i].translation);
     }
 
-    this.root.querySelector('.breadcrumb-item.active').innerHTML = newPage[0].toUpperCase() + newPage.slice(1);
-    this.root.querySelector('.titleCategory').innerHTML = newPage[0].toUpperCase() + newPage.slice(1);
+    this.root.querySelector('.breadcrumb-item.active').innerHTML = Helper.createPageName(newPage);
+    this.root.querySelector('.titleCategory').innerHTML = Helper.createPageName(newPage);
 
   }
 }

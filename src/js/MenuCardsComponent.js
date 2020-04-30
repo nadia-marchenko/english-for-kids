@@ -1,15 +1,15 @@
 import MenuCardComponent from './MenuCardComponent';
 
 export default class MenuCardsComponent {
-  constructor(categories, isPlayMode) {
+  constructor(categories) {
     this.categories = categories;
     this.root = document.createElement('main');
     // state
-    this.isPlayMode = isPlayMode;
+    this.isPlayMode = false;
     this.cards =[];
   }
 
-  draw() {
+  init() {
     const wrapper = `<div class="wrapper main__wrapper">
                             <div class="cards__wrapper">
                                 <div class="row">
@@ -21,7 +21,7 @@ export default class MenuCardsComponent {
     for (let i = 0; i < this.categories.length; i += 1) {
       const card = new MenuCardComponent(this.categories[i], this.isPlayMode);
       this.cards.push(card);
-      this.root.querySelector('.row').append(card.draw());
+      this.root.querySelector('.row').append(card.init());
     }
 
     return this.root;

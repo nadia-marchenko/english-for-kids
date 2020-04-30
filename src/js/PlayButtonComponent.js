@@ -3,8 +3,6 @@ export default class PlayButtonComponent {
     this.root = document.createElement('div');
     this.startPlay = startPlay;
     this.repeatAudio = repeatAudio;
-    // state
-    // this.isPlay = isPlay;
   }
 
   init() {
@@ -17,18 +15,6 @@ export default class PlayButtonComponent {
       this.changeToRepeatButton();
     };
     
-    // if (this.isPlay) {
-    //   playButton.classList.add('repeat-button');
-    //   playButton.innerHTML = '';
-    // }
-
-    // playButton.onclick = () => {
-    //   if (!this.isPlay) {
-    //     this.startPlay();
-    //   } else {
-    //     this.repeatAudio();
-    //   }
-    // };
     return this.root;
   }
 
@@ -40,6 +26,16 @@ export default class PlayButtonComponent {
     this.root.classList.remove('hidden');
   }
 
+  changeToRepeatButton() {
+    const playButton = this.root.querySelector('.btn');
+    playButton.classList.add('repeat-button');
+    playButton.innerHTML = '';
+    this.startPlay();
+    playButton.onclick = () => {
+      this.repeatAudio();
+    };
+  }
+
   changeToPlayButton() {
     this.root.querySelector('.btn').classList.remove('repeat-button');
     this.root.querySelector('.btn').innerHTML = 'Play';
@@ -48,16 +44,6 @@ export default class PlayButtonComponent {
 
     playButton.onclick = () => {
       this.changeToRepeatButton();
-    };
-  }
-
-  changeToRepeatButton() {
-    const playButton = this.root.querySelector('.btn');
-    playButton.classList.add('repeat-button');
-    playButton.innerHTML = '';
-    this.startPlay();
-    playButton.onclick = () => {
-      this.repeatAudio();
     };
   }
 

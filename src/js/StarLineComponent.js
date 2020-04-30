@@ -1,14 +1,10 @@
 export default class StarLineComponent {
   constructor() {
     this.root = document.createElement('div');
-    // state
   }
 
   init() {
     this.root.className = 'rating';
-    let string = '';
-
-    this.root.insertAdjacentHTML('beforeend', string);
 
     return this.root;
   }

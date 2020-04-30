@@ -1,3 +1,5 @@
+import Helper from "./Helper";
+
 export default class TrainingCardComponent {
   constructor(word, translation) {
     this.word = word;
@@ -8,7 +10,26 @@ export default class TrainingCardComponent {
   init() {
     this.root.classList = 'col-md-3 col-sm-6';
 
-    const trainingCard = this.createHtmlCard(this.word, this.translation)
+    const trainingCard = `<div class="card">    
+                            <div class="flip-card">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <img class="card-img-top" src="images/${this.word}.jpeg" alt="${this.word}">
+                                        <div class="card-body card-game">
+                                            <p class="card-text text-front">${Helper.createPageName(this.word)}</p>
+                                            <span class="icon"></span>
+                                        </div>
+                                    </div>
+                                    <div class="flip-card-back rotate">
+                                        <img class="card-img-top" src="images/${this.word}.jpeg" alt="${this.word}">
+                                        <div class="card-body card-game">
+                                            <p class="card-text text-back">${Helper.createPageName(this.translation)}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <audio class="audio"></audio>
+                          </div>`;
 
     this.root.insertAdjacentHTML('afterbegin', trainingCard);
 
@@ -29,47 +50,14 @@ export default class TrainingCardComponent {
     return this.root;
   }
 
-  createHtmlCard(word, translation) {
-    return `<div class="card" id="${word}">    
-                        <div class="flip-card">
-                            <div class="flip-card-inner">
-                                <div class="flip-card-front">
-                                    <img class="card-img-top" src="images/${word}.jpeg" alt="${word}">
-                                    <div class="card-body card-game">
-                                        <p class="card-text">${word[0].toUpperCase() + word.slice(1)}</p>
-                                        <span class="icon"></span>
-                                    </div>
-                                </div>
-                                <div class="flip-card-back rotate">
-                                    <img class="card-img-top" src="images/${word}.jpeg" alt="${word}">
-                                    <div class="card-body card-game">
-                                        <p class="card-text">${translation[0].toUpperCase() + translation.slice(1)}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <audio class="audio"></audio>
-                    </div>`;
-  }
-
   changeCardContent(word, translation) {
     this.word = word;
-    
-    this.root.innerHTML = this.createHtmlCard(word, translation);
-    this.root.querySelector('.card').onclick = () => {
-      const audio = this.root.querySelector('.audio');
-      audio.src = `audio/${this.word}.mp3`;
-      audio.play();
-    };
+    this.translation = translation;
 
-    this.root.querySelector('.icon').onclick = (ev) => {
-      this.root.querySelector('.flip-card-inner').classList.add('rotate');
-      ev.stopPropagation();
-    };
-
-    this.root.querySelector('.flip-card-back').onmouseleave = () => {
-      this.root.querySelector('.flip-card-inner').classList.remove('rotate');
-    };
+    this.root.querySelectorAll('.card-img-top').forEach(img => img.src = `images/${word}.jpeg`);
+    this.root.querySelectorAll('.card-img-top').forEach(img => img.setAttribute('alt', word));
+    this.root.querySelector('.text-front').innerHTML = Helper.createPageName(word);
+    this.root.querySelector('.text-back').innerHTML = Helper.createPageName(translation);
   }
 
 }

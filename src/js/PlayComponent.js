@@ -2,6 +2,7 @@ import PlayCardComponent from './PlayCardComponent';
 import PlayButtonComponent from './PlayButtonComponent';
 import StarLineComponent from './StarLineComponent';
 import CategoryProvider from './CategoryProvider';
+import Helper from './Helper';
 
 export default class PlayComponent {
   constructor() {
@@ -33,10 +34,10 @@ export default class PlayComponent {
                                     <a href="#">Home</a>
                                 </li>
                                 <li class="breadcrumb-item active">
-                                    ${this.category[0].toUpperCase() + this.category.slice(1)}
+                                    ${Helper.createPageName(this.category)}
                                 </li>
                             </ol>
-                            <h1 class="titleCategory">${this.category[0].toUpperCase() + this.category.slice(1)}</h1>
+                            <h1 class="titleCategory">${Helper.createPageName(this.category)}</h1>
                             <div class="cards__wrapper">
                                 <div class="row">
                                 </div>
@@ -53,9 +54,7 @@ export default class PlayComponent {
           i,
           wordsAndTranslations[i].word,
           (id) => this.verifyAnswer(id),
-          this.isPlaying,
-          wasAnswered, 
-          this.currentStarsArray,
+          this.isPlaying
         );
         this.cards.push(card);
         this.root.querySelector('.row').append(card.draw());
@@ -71,7 +70,6 @@ export default class PlayComponent {
   startPlay() {
     this.stars.show();
     this.playCurrentAudio();
-    // this.isPlaying = !this.isPlaying;
     this.cards.forEach(card => {card.startPlay()});
   }
 
@@ -95,12 +93,6 @@ export default class PlayComponent {
   }
 
   recordCorrectAnswer() {
-    if (this.currentQuestionIndex === 7 && !this.answersArray.includes(0)) {
-      this.showWin();
-    }
-    else if (this.currentQuestionIndex === 7 && this.answersArray.includes(0)) {
-      this.showMistakes();
-    }
     this.currentQuestionIndex += 1;
     this.answersArray.push(1);
     this.stars.recordCorrectAnswer();
@@ -108,12 +100,15 @@ export default class PlayComponent {
     if (this.currentQuestionIndex != 8) {
       this.playCurrentAudio();
     }
+    if (this.currentQuestionIndex === 8 && !this.answersArray.includes(0)) {
+      this.showWin();
+    }
+    else if (this.currentQuestionIndex === 8 && this.answersArray.includes(0)) {
+      this.showMistakes();
+    }
   }
 
   recordWrongAnswer() {
-    if (this.currentQuestionIndex === 7 && this.answersArray.includes(0)) {
-      this.showMistakes();
-    }
     this.answersArray.push(0);
     this.stars.recordWrongAnswer();
   }
@@ -124,7 +119,6 @@ export default class PlayComponent {
     const audio = this.root.querySelector('.audio');
     const mainWrapper = this.root.querySelector('.main__wrapper');
     const numWrongs = this.answersArray.filter((answer) => answer === 0).length;
-    // mainWrapper.insertAdjacentHTML('beforeend', `<h2>Numbers of wrong answers: ${numWrongs}</h2>`);
 
     const fail = `<div class = "fail-block">
                     <h2>Numbers of wrong answers: ${numWrongs}</h2>
@@ -161,19 +155,9 @@ export default class PlayComponent {
   finishGame() {
     window.location.replace('/#/main');
     this.stars.hide();
-    this.stars.delete();
-    this.answersArray = [];
+    this.resetGame();
     this.cards.forEach(card => card.show());
     this.button.show();
-    this.button.changeToPlayButton();
-    this.currentQuestionIndex = 0;
-    this.questionsArray = this.shuffle(this.questionsArray);
-  }
-
-  delete() {
-    if (this.root.querySelector('.main__wrapper')) {
-      this.root.querySelector('.main__wrapper').remove();
-    }
   }
 
   shuffle(a) {
@@ -203,15 +187,10 @@ export default class PlayComponent {
       this.cards[i].changeCardContent(wordsAndTranslations[i].word, wordsAndTranslations[i].translation);
     }
 
-    this.stars.delete();
-    this.answersArray = [];
-    this.button.changeToPlayButton();
-    this.currentQuestionIndex = 0;
+    this.resetGame();
 
-    this.root.querySelector('.breadcrumb-item.active').innerHTML = newPage[0].toUpperCase() + newPage.slice(1);
-    this.root.querySelector('.titleCategory').innerHTML = newPage[0].toUpperCase() + newPage.slice(1);
-
-    this.questionsArray = this.shuffle(this.questionsArray);
+    this.root.querySelector('.breadcrumb-item.active').innerHTML = Helper.createPageName(newPage);
+    this.root.querySelector('.titleCategory').innerHTML = Helper.createPageName(newPage);
   }
 
   hide() {
@@ -220,5 +199,13 @@ export default class PlayComponent {
 
   show() {
     this.root.classList.remove('hidden');
+  }
+
+  resetGame() {
+    this.stars.delete();
+    this.answersArray = [];
+    this.button.changeToPlayButton();
+    this.currentQuestionIndex = 0;
+    this.questionsArray = this.shuffle(this.questionsArray);
   }
 }

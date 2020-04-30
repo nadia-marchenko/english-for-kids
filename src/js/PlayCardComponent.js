@@ -1,13 +1,9 @@
 export default class PlayCardComponent {
-  constructor(id, word, tap, isPlaying, wasAnswered, currentStarsArray) {
+  constructor(id, word, tap) {
     this.id = id;
     this.word = word;
     this.tap = tap;
     this.root = document.createElement('div');
-    // state
-    //this.isPlaying = isPlaying;
-    this.wasAnswered = wasAnswered;
-    this.currentStarsArray = currentStarsArray;
   }
 
   draw() {

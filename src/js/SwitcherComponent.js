@@ -1,5 +1,5 @@
 export default class SwitcherComponent {
-  constructor(toggleTrainingMode, isPlayMode) {
+  constructor(toggleTrainingMode) {
     this.toggleTrainingMode = toggleTrainingMode;
     this.root = document.createElement('div');
   }

@@ -1,13 +1,13 @@
+import Helper from "./Helper";
+
 export default class MenuComponent {
   constructor() {
     this.root = document.createElement('div');
+    this.isPlayMode = false;
+    this.isOpened = false;
   }
 
   init(currentPage) {
-    if (this.root.querySelector('.header__burger')) {
-      this.root.querySelector('.header__burger').remove();
-      this.root.querySelector('.header__navigation').remove();
-    }
 
     const menuItems = ['main', 'actions', 'adjectives', 'animals', 'clothes', 'emotions', 'flowers', 'food', 'kitchen'];
 
@@ -18,7 +18,7 @@ export default class MenuComponent {
                             <ul class="navigation navbar-nav mr-auto"> 
                                 ${menuItems.map((category) => `<li class="nav-item">
                                         <a class="nav-link ${currentPage === category ? 'active' : ''}" href="/#/${category}">
-                                            ${category[0].toUpperCase() + category.slice(1)}
+                                            ${Helper.createPageName(category)}
                                         </a>
                                     </li>`).reduce((a, b) => a + b)}
                             </ul>
@@ -38,8 +38,8 @@ export default class MenuComponent {
   }
 
   toggleMenu() {
-
-    if (this.root.querySelector('.header__navigation').classList.contains('active')) {
+    this.isOpened = !this.isOpened;
+    if (!this.isOpened) {
       this.root.querySelector('.header__navigation').classList.remove('active');
       this.root.querySelector('.header__burger').classList.remove('active');
     } else {
@@ -49,7 +49,8 @@ export default class MenuComponent {
   }
 
   togglePlayMode() {
-    if(this.root.querySelector('.header__navigation').classList.contains('play-mode')) {
+    this.isPlayMode = !this.isPlayMode;
+    if(!this.isPlayMode) {
       this.root.querySelector('.header__navigation').classList.remove('play-mode');
     } else {
       this.root.querySelector('.header__navigation').classList.add('play-mode');

@@ -14,10 +14,12 @@ importAll(require.context('../assets', true, /\.mp3$/));
 export default class PageComponent {
   constructor() {
     this.root = document.body;
+
     this.header = new HeaderComponent(() => this.togglePlayMode());
-    this.menuCards = new MenuCardsComponent(new CategoryProvider().getCategories(), true);
+    this.menuCards = new MenuCardsComponent(new CategoryProvider().getCategories());
     this.trainingCards = new TrainingComponent();
     this.playingCards = new PlayComponent();
+
     this.currentPage = undefined;
     this.isPlayMode = undefined;
   }
@@ -27,8 +29,8 @@ export default class PageComponent {
     this.isPlayMode = false;
 
     this.root.prepend(this.header.init(currentPage));
-    this.root.append(this.menuCards.draw());
-    this.root.append(this.trainingCards.draw(currentPage));
+    this.root.append(this.menuCards.init());
+    this.root.append(this.trainingCards.init(currentPage));
     this.root.append(this.playingCards.init(currentPage));
 
 
@@ -38,16 +40,19 @@ export default class PageComponent {
       this.menuCards.hide();
     }
 
-    if(!this.isPlayMode) {
-      this.playingCards.hide();
-    }
+    this.playingCards.hide();
   }
 
   changeCurrentPage(newPage) {
-    this.header.changeCurrentPage(newPage);
+    this.hideCurrentCards();
+    this.currentPage = newPage;
+    this.changeCurrentPageInChildren(newPage);
+    this.showCurrentCards();
+  }
 
+  hideCurrentCards() {
     if (this.currentPage == 'main') {
-        this.menuCards.hide();
+      this.menuCards.hide();
     } else {
       if(this.isPlayMode){
         this.playingCards.hide();
@@ -55,14 +60,9 @@ export default class PageComponent {
         this.trainingCards.hide();
       }
     }
+  }
 
-    this.currentPage = newPage;
-
-    if(this.currentPage != 'main') {
-      this.trainingCards.changeCurrentPage(newPage);
-      this.playingCards.changeCurrentPage(newPage);
-    }
-
+  showCurrentCards() {
     if (this.currentPage == 'main') {
       this.menuCards.show();
     } else {
@@ -74,6 +74,14 @@ export default class PageComponent {
     }
   }
 
+  changeCurrentPageInChildren(newPage) {
+    if(this.currentPage != 'main') {
+      this.trainingCards.changeCurrentPage(newPage);
+      this.playingCards.changeCurrentPage(newPage);
+    }
+    this.header.changeCurrentPage(newPage);
+  }
+  
   togglePlayMode() {
     this.isPlayMode = !this.isPlayMode;
     this.header.togglePlayMode();
