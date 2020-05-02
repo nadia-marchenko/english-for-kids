@@ -14,7 +14,7 @@ export default class PlayButtonComponent {
     playButton.onclick = () => {
       this.changeToRepeatButton();
     };
-    
+
     return this.root;
   }
 
@@ -46,5 +46,4 @@ export default class PlayButtonComponent {
       this.changeToRepeatButton();
     };
   }
-
 }

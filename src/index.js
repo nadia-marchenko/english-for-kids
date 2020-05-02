@@ -12,6 +12,6 @@ const page = new PageComponent();
 
 page.init(currentPage);
 
-window.onhashchange = function () {
+window.onhashchange = () => {
   page.changeCurrentPage(getCategoryFromURL());
 };

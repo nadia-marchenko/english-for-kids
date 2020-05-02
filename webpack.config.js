@@ -57,7 +57,12 @@ module.exports = (env, options) => {
                     options: {
                       name: '/audio/[name].[ext]',
                     }
-                }
+                  },
+                  {
+                    test: /\.json$/,
+                    loader: 'json-loader',
+                    include: __dirname + '/dist'
+                  }
             ]
         },
 

@@ -1,4 +1,4 @@
-import Helper from "./Helper";
+import Helper from './Helper';
 
 export default class MenuComponent {
   constructor() {
@@ -8,7 +8,6 @@ export default class MenuComponent {
   }
 
   init(currentPage) {
-
     const menuItems = ['main', 'actions', 'adjectives', 'animals', 'clothes', 'emotions', 'flowers', 'food', 'kitchen'];
 
     const couple = `<div class="header__burger" id="header__burger">
@@ -30,8 +29,10 @@ export default class MenuComponent {
       this.toggleMenu();
     };
 
-    this.root.querySelectorAll('a').forEach(a => a.onclick = () => {
-      this.toggleMenu();
+    this.root.querySelectorAll('a').forEach((link) => {
+      link.onclick = () => {
+        this.toggleMenu();
+      };
     });
 
     return this.root;
@@ -50,7 +51,7 @@ export default class MenuComponent {
 
   togglePlayMode() {
     this.isPlayMode = !this.isPlayMode;
-    if(!this.isPlayMode) {
+    if (!this.isPlayMode) {
       this.root.querySelector('.header__navigation').classList.remove('play-mode');
     } else {
       this.root.querySelector('.header__navigation').classList.add('play-mode');

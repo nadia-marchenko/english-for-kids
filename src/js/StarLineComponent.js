@@ -25,9 +25,9 @@ export default class StarLineComponent {
     const stars = '<div class = "lose-star"></div>';
     this.root.insertAdjacentHTML('beforeend', stars);
   }
+
   recordCorrectAnswer() {
     const stars = '<div class = "star"></div>';
     this.root.insertAdjacentHTML('beforeend', stars);
   }
-
 }

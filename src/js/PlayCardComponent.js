@@ -6,10 +6,16 @@ export default class PlayCardComponent {
     this.root = document.createElement('div');
   }
 
+  static createHtmlCard(word) {
+    return `<div class="card" id="${word}">    
+              <img class="card-img-top" src="images/${word}.jpeg" alt="${word}">
+              <audio class="audio"></audio>`;
+  }
+
   draw() {
     this.root.classList = 'col-md-3 col-sm-6';
 
-    const playingCard = this.createHtmlCard(this.word);
+    const playingCard = this.constructor.createHtmlCard(this.word);
 
     this.root.insertAdjacentHTML('afterbegin', playingCard);
 
@@ -22,14 +28,8 @@ export default class PlayCardComponent {
     audio.play();
   }
 
-  createHtmlCard(word) {
-    return `<div class="card" id="${word}">    
-              <img class="card-img-top" src="images/${word}.jpeg" alt="${word}">
-              <audio class="audio"></audio>`;
-  }
-
   changeCardContent(word) {
-    this.root.innerHTML = this.createHtmlCard(word);
+    this.root.innerHTML = this.constructor.createHtmlCard(word);
     this.word = word;
   }
 
@@ -49,9 +49,6 @@ export default class PlayCardComponent {
 
   recordCorrectAnswer() {
     this.root.querySelector('.card-img-top').classList.add('correct-card');
-    this.root.querySelector('.card').onclick = () => {
-      return false;
-    };
+    this.root.querySelector('.card').onclick = () => false;
   }
-
 }

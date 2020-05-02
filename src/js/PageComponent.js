@@ -1,8 +1,8 @@
 import HeaderComponent from './HeaderComponent';
 import MenuCardsComponent from './MenuCardsComponent';
-import CategoryProvider from './CategoryProvider';
 import TrainingComponent from './TrainingComponent';
 import PlayComponent from './PlayComponent';
+import * as CATEGORIES from '../Category.json';
 
 // Import images
 function importAll(r) {
@@ -14,9 +14,9 @@ importAll(require.context('../assets', true, /\.mp3$/));
 export default class PageComponent {
   constructor() {
     this.root = document.body;
-
+    this.data = CATEGORIES;
     this.header = new HeaderComponent(() => this.togglePlayMode());
-    this.menuCards = new MenuCardsComponent(new CategoryProvider().getCategories());
+    this.menuCards = new MenuCardsComponent(Object.keys(this.data.default));
     this.trainingCards = new TrainingComponent();
     this.playingCards = new PlayComponent();
 
@@ -34,7 +34,7 @@ export default class PageComponent {
     this.root.append(this.playingCards.init(currentPage));
 
 
-    if(currentPage === 'main') {
+    if (currentPage === 'main') {
       this.trainingCards.hide();
     } else {
       this.menuCards.hide();
@@ -51,42 +51,38 @@ export default class PageComponent {
   }
 
   hideCurrentCards() {
-    if (this.currentPage == 'main') {
+    if (this.currentPage === 'main') {
       this.menuCards.hide();
+    } else if (this.isPlayMode) {
+      this.playingCards.hide();
     } else {
-      if(this.isPlayMode){
-        this.playingCards.hide();
-      } else {
-        this.trainingCards.hide();
-      }
+      this.trainingCards.hide();
     }
   }
 
   showCurrentCards() {
-    if (this.currentPage == 'main') {
+    if (this.currentPage === 'main') {
       this.menuCards.show();
+    } else if (this.isPlayMode) {
+      this.playingCards.show();
     } else {
-      if(this.isPlayMode) {
-        this.playingCards.show();
-      } else {
-        this.trainingCards.show();
-      }
+      this.trainingCards.show();
     }
   }
 
   changeCurrentPageInChildren(newPage) {
-    if(this.currentPage != 'main') {
+    if (this.currentPage !== 'main') {
       this.trainingCards.changeCurrentPage(newPage);
       this.playingCards.changeCurrentPage(newPage);
     }
     this.header.changeCurrentPage(newPage);
   }
-  
+
   togglePlayMode() {
     this.isPlayMode = !this.isPlayMode;
     this.header.togglePlayMode();
     this.menuCards.togglePlayMode();
-    if(this.isPlayMode) {
+    if (this.isPlayMode) {
       this.trainingCards.hide();
       this.playingCards.show();
     } else {

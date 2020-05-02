@@ -9,7 +9,7 @@ export default class HeaderComponent {
   }
 
   init(currentPage) {
-    this.root.insertAdjacentHTML('beforeend', `<div class="wrapper header__wrapper" id="header__wrapper"/>`);
+    this.root.insertAdjacentHTML('beforeend', '<div class="wrapper header__wrapper" id="header__wrapper"/>');
     this.root.querySelector('.header__wrapper').append(this.menu.init(currentPage));
     this.root.querySelector('.header__wrapper').append(this.switcher.init());
     return this.root;

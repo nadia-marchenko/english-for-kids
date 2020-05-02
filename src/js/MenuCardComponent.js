@@ -1,4 +1,4 @@
-import Helper from "./Helper";
+import Helper from './Helper';
 
 export default class MenuCardComponent {
   constructor(categoryName, isPlayMode) {
@@ -24,11 +24,10 @@ export default class MenuCardComponent {
 
   togglePlayMode() {
     this.isPlayMode = !this.isPlayMode;
-    if(this.isPlayMode) {
+    if (this.isPlayMode) {
       this.root.querySelector('.card').classList.add('play-mode');
     } else {
       this.root.querySelector('.card').classList.remove('play-mode');
     }
   }
-
 }

@@ -1,4 +1,4 @@
-import Helper from "./Helper";
+import Helper from './Helper';
 
 export default class TrainingCardComponent {
   constructor(word, translation) {
@@ -54,10 +54,9 @@ export default class TrainingCardComponent {
     this.word = word;
     this.translation = translation;
 
-    this.root.querySelectorAll('.card-img-top').forEach(img => img.src = `images/${word}.jpeg`);
-    this.root.querySelectorAll('.card-img-top').forEach(img => img.setAttribute('alt', word));
+    this.root.querySelectorAll('.card-img-top').forEach((img) => img.setAttribute('src', `images/${word}.jpeg`));
+    this.root.querySelectorAll('.card-img-top').forEach((img) => img.setAttribute('alt', word));
     this.root.querySelector('.text-front').innerHTML = Helper.createPageName(word);
     this.root.querySelector('.text-back').innerHTML = Helper.createPageName(translation);
   }
-
 }

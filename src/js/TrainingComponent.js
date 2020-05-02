@@ -1,16 +1,18 @@
 import TrainingCardComponent from './TrainingCardComponent';
-import CategoryProvider from './CategoryProvider';
 import Helper from './Helper';
+
+import * as CATEGORIES from '../Category.json';
+// let name = require('./Category.json');
 
 export default class TrainingComponent {
   constructor() {
     this.root = document.createElement('main');
-    this.categoryProvider = new CategoryProvider();
     this.cards = [];
+    this.data = CATEGORIES;
   }
 
   init(currentPage) {
-    const wordsAndTranslations = this.categoryProvider.getCategoriesWordsAndTranslations(currentPage);
+    const wordsAndTranslations = this.data.default[currentPage];
     const wrapper = `<div class="wrapper main__wrapper">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
@@ -29,7 +31,8 @@ export default class TrainingComponent {
     this.root.insertAdjacentHTML('beforeend', wrapper);
 
     for (let i = 0; i < wordsAndTranslations.length; i += 1) {
-      const card = new TrainingCardComponent(wordsAndTranslations[i].word, wordsAndTranslations[i].translation);
+      const card = new TrainingCardComponent(wordsAndTranslations[i].word,
+        wordsAndTranslations[i].translation);
       this.cards.push(card);
       this.root.querySelector('.row').append(card.init());
     }
@@ -45,13 +48,13 @@ export default class TrainingComponent {
   }
 
   changeCurrentPage(newPage) {
-    const wordsAndTranslations = this.categoryProvider.getCategoriesWordsAndTranslations(newPage);
-    for(let i = 0; i < wordsAndTranslations.length; i++) {
-      this.cards[i].changeCardContent(wordsAndTranslations[i].word, wordsAndTranslations[i].translation);
+    const wordsAndTranslations = this.data.default[newPage];
+    for (let i = 0; i < wordsAndTranslations.length; i += 1) {
+      this.cards[i].changeCardContent(wordsAndTranslations[i].word,
+        wordsAndTranslations[i].translation);
     }
 
     this.root.querySelector('.breadcrumb-item.active').innerHTML = Helper.createPageName(newPage);
     this.root.querySelector('.titleCategory').innerHTML = Helper.createPageName(newPage);
-
   }
 }

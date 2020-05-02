@@ -6,7 +6,7 @@ export default class MenuCardsComponent {
     this.root = document.createElement('main');
     // state
     this.isPlayMode = false;
-    this.cards =[];
+    this.cards = [];
   }
 
   init() {
@@ -36,6 +36,6 @@ export default class MenuCardsComponent {
   }
 
   togglePlayMode() {
-    this.cards.forEach(card => card.togglePlayMode());
+    this.cards.forEach((card) => card.togglePlayMode());
   }
 }

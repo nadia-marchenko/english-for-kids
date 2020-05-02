@@ -1,31 +1,30 @@
 import PlayCardComponent from './PlayCardComponent';
 import PlayButtonComponent from './PlayButtonComponent';
 import StarLineComponent from './StarLineComponent';
-import CategoryProvider from './CategoryProvider';
 import Helper from './Helper';
+import * as CATEGORIES from '../Category.json';
 
 export default class PlayComponent {
   constructor() {
     this.category = undefined;
     this.root = document.createElement('main');
-    this.categoryProvider = new CategoryProvider();
-    //components
+    this.cardsNumbers = 8;
+    this.data = CATEGORIES;
+    // components
     this.cards = [];
     this.stars = new StarLineComponent();
     this.button = new PlayButtonComponent(
       () => this.startPlay(),
-      () => this.playCurrentAudio()
+      () => this.playCurrentAudio(),
     );
     // state
-    this.isPlaying = false;
-    this.playStatus = 'NOT_STARTED'; // NOT_STARTED, PLAYING, FINISHED
     this.answersArray = [];
-    this.questionsArray = this.shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
+    this.questionsArray = Helper.shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
     this.currentQuestionIndex = 0;
   }
 
   init(category) {
-    const wordsAndTranslations = this.categoryProvider.getCategoriesWordsAndTranslations(category);
+    const wordsAndTranslations = this.data.default[category];
     this.category = category;
 
     const wrapper = `<div class="wrapper main__wrapper">
@@ -49,20 +48,18 @@ export default class PlayComponent {
     this.cards = [];
 
     for (let i = 0; i < wordsAndTranslations.length; i += 1) {
-        const wasAnswered = this.questionsArray.indexOf(i) < this.currentQuestionIndex;
-        const card = new PlayCardComponent(
-          i,
-          wordsAndTranslations[i].word,
-          (id) => this.verifyAnswer(id),
-          this.isPlaying
-        );
-        this.cards.push(card);
-        this.root.querySelector('.row').append(card.draw());
+      const card = new PlayCardComponent(
+        i,
+        wordsAndTranslations[i].word,
+        (id) => this.verifyAnswer(id),
+      );
+      this.cards.push(card);
+      this.root.querySelector('.row').append(card.draw());
     }
 
     this.root.querySelector('.main__wrapper').append(this.button.init());
     this.root.querySelector('.titleCategory').after(this.stars.init(this.answersArray));
-    this.stars.hide()
+    this.stars.hide();
 
     return this.root;
   }
@@ -70,11 +67,11 @@ export default class PlayComponent {
   startPlay() {
     this.stars.show();
     this.playCurrentAudio();
-    this.cards.forEach(card => {card.startPlay()});
+    this.cards.forEach((card) => { card.startPlay(); });
   }
 
   playCurrentAudio() {
-      this.cards[this.questionsArray[this.currentQuestionIndex]].playAudio();
+    this.cards[this.questionsArray[this.currentQuestionIndex]].playAudio();
   }
 
   verifyAnswer(clickedCardId) {
@@ -82,9 +79,7 @@ export default class PlayComponent {
     if (clickedCardId === this.questionsArray[this.currentQuestionIndex]) {
       audio.src = 'audio/correct-answer.mp3';
       audio.play();
-      setTimeout(() => {
-        this.recordCorrectAnswer();
-      }, 600);
+      this.recordCorrectAnswer();
     } else {
       audio.src = 'audio/wrong-answer.mp3';
       audio.play();
@@ -96,14 +91,15 @@ export default class PlayComponent {
     this.currentQuestionIndex += 1;
     this.answersArray.push(1);
     this.stars.recordCorrectAnswer();
-    this.cards[this.questionsArray[this.currentQuestionIndex-1]].recordCorrectAnswer();
-    if (this.currentQuestionIndex != 8) {
-      this.playCurrentAudio();
+    this.cards[this.questionsArray[this.currentQuestionIndex - 1]].recordCorrectAnswer();
+    if (this.currentQuestionIndex !== this.cardsNumbers) {
+      setTimeout(() => {
+        this.playCurrentAudio();
+      }, 600);
     }
-    if (this.currentQuestionIndex === 8 && !this.answersArray.includes(0)) {
+    if (this.currentQuestionIndex === this.cardsNumbers && !this.answersArray.includes(0)) {
       this.showWin();
-    }
-    else if (this.currentQuestionIndex === 8 && this.answersArray.includes(0)) {
+    } else if (this.currentQuestionIndex === this.cardsNumbers && this.answersArray.includes(0)) {
       this.showMistakes();
     }
   }
@@ -114,7 +110,7 @@ export default class PlayComponent {
   }
 
   showMistakes() {
-    this.cards.forEach(card => card.hide());
+    this.cards.forEach((card) => card.hide());
     this.button.hide();
     const audio = this.root.querySelector('.audio');
     const mainWrapper = this.root.querySelector('.main__wrapper');
@@ -135,7 +131,7 @@ export default class PlayComponent {
   }
 
   showWin() {
-    this.cards.forEach(card => card.hide());
+    this.cards.forEach((card) => card.hide());
     this.button.hide();
     const audio = this.root.querySelector('.audio');
     const mainWrapper = this.root.querySelector('.main__wrapper');
@@ -156,20 +152,8 @@ export default class PlayComponent {
     window.location.replace('/#/main');
     this.stars.hide();
     this.resetGame();
-    this.cards.forEach(card => card.show());
+    this.cards.forEach((card) => card.show());
     this.button.show();
-  }
-
-  shuffle(a) {
-    const res = a;
-    let j; let x; let i;
-    for (i = a.length - 1; i > 0; i -= 1) {
-      j = Math.floor(Math.random() * (i + 1));
-      x = res[i];
-      res[i] = res[j];
-      res[j] = x;
-    }
-    return res;
   }
 
   hide() {
@@ -178,13 +162,13 @@ export default class PlayComponent {
 
   show() {
     this.root.classList.remove('hidden');
-
   }
 
   changeCurrentPage(newPage) {
-    const wordsAndTranslations = this.categoryProvider.getCategoriesWordsAndTranslations(newPage);
-    for(let i = 0; i < wordsAndTranslations.length; i++) {
-      this.cards[i].changeCardContent(wordsAndTranslations[i].word, wordsAndTranslations[i].translation);
+    const wordsAndTranslations = this.data.default[newPage];
+    for (let i = 0; i < wordsAndTranslations.length; i += 1) {
+      this.cards[i].changeCardContent(wordsAndTranslations[i].word,
+        wordsAndTranslations[i].translation);
     }
 
     this.resetGame();
@@ -193,19 +177,11 @@ export default class PlayComponent {
     this.root.querySelector('.titleCategory').innerHTML = Helper.createPageName(newPage);
   }
 
-  hide() {
-    this.root.classList.add('hidden');
-  }
-
-  show() {
-    this.root.classList.remove('hidden');
-  }
-
   resetGame() {
     this.stars.delete();
     this.answersArray = [];
     this.button.changeToPlayButton();
     this.currentQuestionIndex = 0;
-    this.questionsArray = this.shuffle(this.questionsArray);
+    this.questionsArray = Helper.shuffle(this.questionsArray);
   }
 }

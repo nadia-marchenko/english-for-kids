@@ -15,7 +15,7 @@ export default class SwitcherComponent {
     this.root.querySelector('.switch-input').checked = true;
 
     this.root.querySelector('.switch-input').onclick = () => {
-        this.toggleTrainingMode();
+      this.toggleTrainingMode();
     };
 
     return this.root;
